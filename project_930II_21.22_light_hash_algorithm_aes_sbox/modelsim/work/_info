@@ -8,79 +8,79 @@ z2
 !i10e 25
 !i10f 100
 cModel Technology
-Z0 dC:/Users/anicc/Documents/Desktop/Progetto_HES/modelsim
+dC:/Users/anicc/Documents/Desktop/Progetto_HES/modelsim
 vcaesar_ciph_tb_checks
-Z1 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
-Z2 !s110 1654113712
+Z0 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
+Z1 !s110 1654116124
 !i10b 1
 !s100 K7M7W<U7XcISk94c]T]7n2
-Z3 !s11b Dg1SIo80bB@j0V0VzS_@n1
-ILacjzOMTz?F<@az3dMfTe2
-Z4 VDg1SIo80bB@j0V0VzS_@n1
+Z2 !s11b Dg1SIo80bB@j0V0VzS_@n1
+IGdWc^SjGI]jYI96=iIfcT2
+Z3 VDg1SIo80bB@j0V0VzS_@n1
 S1
-R0
-Z5 w1649141141
-Z6 8C:/Users/anicc/Documents/Desktop/Progetto_HES/modelsim/Light_Hash_algorithm_(AES_S-box_based).sv
-Z7 FC:/Users/anicc/Documents/Desktop/Progetto_HES/modelsim/Light_Hash_algorithm_(AES_S-box_based).sv
-!i122 1
+Z4 dC:/Users/giaco/Documents/ProjectHES/Hardware-and-Embedded-Security/project_930II_21.22_light_hash_algorithm_aes_sbox/modelsim
+Z5 w1654114304
+Z6 8C:/Users/giaco/Documents/ProjectHES/Hardware-and-Embedded-Security/project_930II_21.22_light_hash_algorithm_aes_sbox/tb/LH_AES_tb.sv
+Z7 FC:/Users/giaco/Documents/ProjectHES/Hardware-and-Embedded-Security/project_930II_21.22_light_hash_algorithm_aes_sbox/tb/LH_AES_tb.sv
+!i122 3
 L0 4 317
 Z8 OV;L;2020.1;71
 r1
 !s85 0
 31
-Z9 !s108 1654113712.000000
-!s107 C:/Users/anicc/Documents/Desktop/Progetto_HES/modelsim/Light_Hash_algorithm_(AES_S-box_based).sv|
-Z10 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/anicc/Documents/Desktop/Progetto_HES/modelsim/Light_Hash_algorithm_(AES_S-box_based).sv|
+Z9 !s108 1654116124.000000
+!s107 C:/Users/giaco/Documents/ProjectHES/Hardware-and-Embedded-Security/project_930II_21.22_light_hash_algorithm_aes_sbox/tb/LH_AES_tb.sv|
+Z10 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/giaco/Documents/ProjectHES/Hardware-and-Embedded-Security/project_930II_21.22_light_hash_algorithm_aes_sbox/tb/LH_AES_tb.sv|
 !i113 1
 Z11 o-work work -sv
 Z12 tCvgOpt 0
 vcaesar_ciph_tb_file_enc
+R0
 R1
-R2
 !i10b 1
 !s100 k:YAmDI0DkD[5oVDE:YMQ3
+R2
+I9he?=zU^GAV[l1P6e@]fj1
 R3
-I<5bMX^k0]kGNFj6kJab7e2
-R4
 S1
-R0
+R4
 R5
 R6
 R7
-!i122 1
+!i122 3
 L0 326 98
 R8
 r1
 !s85 0
 31
 R9
-Z13 !s107 C:/Users/anicc/Documents/Desktop/Progetto_HES/modelsim/Light_Hash_algorithm_(AES_S-box_based).sv|
+Z13 !s107 C:/Users/giaco/Documents/ProjectHES/Hardware-and-Embedded-Security/project_930II_21.22_light_hash_algorithm_aes_sbox/tb/LH_AES_tb.sv|
 R10
 !i113 1
 R11
 R12
 vcaesar_cipher
+R0
 R1
-R2
 !i10b 1
 !s100 6C8X_ekJQJ>2MA;Go71lC1
+R2
+IJShb3CU]IeS1Y6cM5o=?i2
 R3
-ImIPkLOW4GOE=aJdS^jeQ?3
-R4
 S1
-R0
-w1649148570
-8C:/Users/anicc/Documents/Desktop/Progetto_HES/db/Light_Hash_algorithm_(AES_S-box_based).sv
-FC:/Users/anicc/Documents/Desktop/Progetto_HES/db/Light_Hash_algorithm_(AES_S-box_based).sv
-!i122 0
+R4
+R5
+8C:/Users/giaco/Documents/ProjectHES/Hardware-and-Embedded-Security/project_930II_21.22_light_hash_algorithm_aes_sbox/db/LH_AES.sv
+FC:/Users/giaco/Documents/ProjectHES/Hardware-and-Embedded-Security/project_930II_21.22_light_hash_algorithm_aes_sbox/db/LH_AES.sv
+!i122 2
 L0 121 88
 R8
 r1
 !s85 0
 31
-R9
-!s107 C:/Users/anicc/Documents/Desktop/Progetto_HES/db/Light_Hash_algorithm_(AES_S-box_based).sv|
-!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/anicc/Documents/Desktop/Progetto_HES/db/Light_Hash_algorithm_(AES_S-box_based).sv|
+!s108 1654116123.000000
+!s107 C:/Users/giaco/Documents/ProjectHES/Hardware-and-Embedded-Security/project_930II_21.22_light_hash_algorithm_aes_sbox/db/LH_AES.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/giaco/Documents/ProjectHES/Hardware-and-Embedded-Security/project_930II_21.22_light_hash_algorithm_aes_sbox/db/LH_AES.sv|
 !i113 1
 R11
 R12

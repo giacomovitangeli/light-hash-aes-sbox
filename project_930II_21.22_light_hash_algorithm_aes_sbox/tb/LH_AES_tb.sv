@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------------
-// ---- Testbench of Caesar's cipher module for debug and corner cases check
+// ---- Testbench of light hash module for debug and corner cases check
 // -----------------------------------------------------------------------------
 module light_hash_tb_checks;
 

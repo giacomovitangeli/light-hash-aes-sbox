@@ -1,4 +1,9 @@
-C:/Users/giaco/Documents/ProjectHES/Hardware-and-Embedded-Security/project_930II_21.22_light_hash_algorithm_aes_sbox/tb/LH_AES_tb.sv {1 {vlog -work work -sv -stats=none {C:\Users\giaco\Documents\ProjectHES\Hardware-and-Embedded-Security\project_930II_21.22_light_hash_algorithm_aes_sbox\tb\LH_AES_tb.sv}
+C:/Users/giaco/Documents/ProjectHES/Hardware-and-Embedded-Security/project_930II_21.22_light_hash_algorithm_aes_sbox/db/LH_AES.sv {0 {vlog -work work -sv -stats=none {C:\Users\giaco\Documents\ProjectHES\Hardware-and-Embedded-Security\project_930II_21.22_light_hash_algorithm_aes_sbox\db\LH_AES.sv}
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+** Error: (vlog-13069) C:\Users\giaco\Documents\ProjectHES\Hardware-and-Embedded-Security\project_930II_21.22_light_hash_algorithm_aes_sbox\db\LH_AES.sv(19): near "=": syntax error, unexpected '='.
+** Error: C:\Users\giaco\Documents\ProjectHES\Hardware-and-Embedded-Security\project_930II_21.22_light_hash_algorithm_aes_sbox\db\LH_AES.sv(19): (vlog-13205) Syntax error found in the scope following 'digest_char'. Is there a missing '::'?
+
+} {3.0 5.0} {}} C:/Users/giaco/Documents/ProjectHES/Hardware-and-Embedded-Security/project_930II_21.22_light_hash_algorithm_aes_sbox/tb/LH_AES_tb.sv {1 {vlog -work work -sv -stats=none {C:\Users\giaco\Documents\ProjectHES\Hardware-and-Embedded-Security\project_930II_21.22_light_hash_algorithm_aes_sbox\tb\LH_AES_tb.sv}
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
 -- Compiling module light_hash_tb_checks
 -- Compiling module caesar_ciph_tb_file_enc

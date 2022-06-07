@@ -1,7 +1,7 @@
 // -----------------------------------------------------------------------------
 // ---- Testbench of Caesar's cipher module for debug and corner cases check
 // -----------------------------------------------------------------------------
-module caesar_ciph_tb_checks;
+module light_hash_tb_checks;
 
   reg clk = 1'b0;
   always #5 clk = !clk;

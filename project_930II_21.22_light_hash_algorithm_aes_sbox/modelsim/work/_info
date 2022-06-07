@@ -11,76 +11,126 @@ cModel Technology
 dC:/Users/anicc/Documents/Desktop/Progetto_HES/modelsim
 vcaesar_ciph_tb_checks
 Z0 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
-Z1 !s110 1654116124
+Z1 !s110 1654605851
 !i10b 1
 !s100 K7M7W<U7XcISk94c]T]7n2
 Z2 !s11b Dg1SIo80bB@j0V0VzS_@n1
-IGdWc^SjGI]jYI96=iIfcT2
+ISL7YmH]@=GO`2<W2_A5hN2
 Z3 VDg1SIo80bB@j0V0VzS_@n1
 S1
 Z4 dC:/Users/giaco/Documents/ProjectHES/Hardware-and-Embedded-Security/project_930II_21.22_light_hash_algorithm_aes_sbox/modelsim
 Z5 w1654114304
-Z6 8C:/Users/giaco/Documents/ProjectHES/Hardware-and-Embedded-Security/project_930II_21.22_light_hash_algorithm_aes_sbox/tb/LH_AES_tb.sv
-Z7 FC:/Users/giaco/Documents/ProjectHES/Hardware-and-Embedded-Security/project_930II_21.22_light_hash_algorithm_aes_sbox/tb/LH_AES_tb.sv
-!i122 3
-L0 4 317
-Z8 OV;L;2020.1;71
+Z6 8C:\Users\giaco\Documents\ProjectHES\Hardware-and-Embedded-Security\project_930II_21.22_light_hash_algorithm_aes_sbox\tb\LH_AES_tb.sv
+Z7 FC:\Users\giaco\Documents\ProjectHES\Hardware-and-Embedded-Security\project_930II_21.22_light_hash_algorithm_aes_sbox\tb\LH_AES_tb.sv
+!i122 11
+Z8 L0 4 317
+Z9 OV;L;2020.1;71
 r1
 !s85 0
 31
-Z9 !s108 1654116124.000000
-!s107 C:/Users/giaco/Documents/ProjectHES/Hardware-and-Embedded-Security/project_930II_21.22_light_hash_algorithm_aes_sbox/tb/LH_AES_tb.sv|
-Z10 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/giaco/Documents/ProjectHES/Hardware-and-Embedded-Security/project_930II_21.22_light_hash_algorithm_aes_sbox/tb/LH_AES_tb.sv|
+Z10 !s108 1654605851.000000
+!s107 C:\Users\giaco\Documents\ProjectHES\Hardware-and-Embedded-Security\project_930II_21.22_light_hash_algorithm_aes_sbox\tb\LH_AES_tb.sv|
+Z11 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:\Users\giaco\Documents\ProjectHES\Hardware-and-Embedded-Security\project_930II_21.22_light_hash_algorithm_aes_sbox\tb\LH_AES_tb.sv|
 !i113 1
-Z11 o-work work -sv
-Z12 tCvgOpt 0
+Z12 o-work work -sv
+Z13 tCvgOpt 0
 vcaesar_ciph_tb_file_enc
 R0
-R1
+Z14 !s110 1654610176
 !i10b 1
 !s100 k:YAmDI0DkD[5oVDE:YMQ3
 R2
-I9he?=zU^GAV[l1P6e@]fj1
+I;4ZXHlXBj@oGPeS^`2Aa^0
 R3
 S1
 R4
-R5
+Z15 w1654606098
 R6
 R7
-!i122 3
+!i122 20
 L0 326 98
-R8
+R9
 r1
 !s85 0
 31
-R9
-Z13 !s107 C:/Users/giaco/Documents/ProjectHES/Hardware-and-Embedded-Security/project_930II_21.22_light_hash_algorithm_aes_sbox/tb/LH_AES_tb.sv|
-R10
-!i113 1
+Z16 !s108 1654610176.000000
+Z17 !s107 C:\Users\giaco\Documents\ProjectHES\Hardware-and-Embedded-Security\project_930II_21.22_light_hash_algorithm_aes_sbox\tb\LH_AES_tb.sv|
 R11
+!i113 1
 R12
+R13
 vcaesar_cipher
 R0
 R1
 !i10b 1
 !s100 6C8X_ekJQJ>2MA;Go71lC1
 R2
-IJShb3CU]IeS1Y6cM5o=?i2
+IW7DilX7k6DMMJbRAe2oOA0
 R3
 S1
 R4
 R5
-8C:/Users/giaco/Documents/ProjectHES/Hardware-and-Embedded-Security/project_930II_21.22_light_hash_algorithm_aes_sbox/db/LH_AES.sv
-FC:/Users/giaco/Documents/ProjectHES/Hardware-and-Embedded-Security/project_930II_21.22_light_hash_algorithm_aes_sbox/db/LH_AES.sv
-!i122 2
+Z18 8C:\Users\giaco\Documents\ProjectHES\Hardware-and-Embedded-Security\project_930II_21.22_light_hash_algorithm_aes_sbox\db\LH_AES.sv
+Z19 FC:\Users\giaco\Documents\ProjectHES\Hardware-and-Embedded-Security\project_930II_21.22_light_hash_algorithm_aes_sbox\db\LH_AES.sv
+!i122 10
 L0 121 88
-R8
+R9
 r1
 !s85 0
 31
-!s108 1654116123.000000
-!s107 C:/Users/giaco/Documents/ProjectHES/Hardware-and-Embedded-Security/project_930II_21.22_light_hash_algorithm_aes_sbox/db/LH_AES.sv|
-!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/giaco/Documents/ProjectHES/Hardware-and-Embedded-Security/project_930II_21.22_light_hash_algorithm_aes_sbox/db/LH_AES.sv|
+R10
+Z20 !s107 C:\Users\giaco\Documents\ProjectHES\Hardware-and-Embedded-Security\project_930II_21.22_light_hash_algorithm_aes_sbox\db\LH_AES.sv|
+Z21 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:\Users\giaco\Documents\ProjectHES\Hardware-and-Embedded-Security\project_930II_21.22_light_hash_algorithm_aes_sbox\db\LH_AES.sv|
 !i113 1
-R11
 R12
+R13
+vlight_hash
+R0
+!s110 1654606111
+!i10b 1
+!s100 C^n?Q1d17?FmOY2:bTkIL3
+R2
+I<514XzlJ4J?fSOkHEOIz;0
+R3
+S1
+R4
+w1654606096
+R18
+R19
+!i122 14
+L0 3 88
+R9
+r1
+!s85 0
+31
+!s108 1654606111.000000
+R20
+R21
+!i113 1
+R12
+R13
+vlight_hash_tb_checks
+R0
+R14
+!i10b 1
+!s100 [<lzlz^86`zhDG[@OT]Fk2
+R2
+IhzQ?BUid<[LLFckXQXEk:0
+R3
+S1
+R4
+R15
+R6
+R7
+!i122 20
+R8
+R9
+r1
+!s85 0
+31
+R16
+R17
+R11
+!i113 1
+R12
+R13

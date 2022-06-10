@@ -135,3 +135,18 @@
 # Compile of LH_AES.sv was successful.
 # Compile of LH_AES_tb.sv was successful.
 # 2 compiles, 0 failed with no errors.
+# Compile of LH_AES.sv was successful.
+# Compile of LH_AES_tb.sv was successful.
+# 2 compiles, 0 failed with no errors.
+vsim -gui work.light_hash
+# vsim -gui work.light_hash 
+# Start time: 17:58:44 on Jun 10,2022
+# Loading sv_std.std
+# Loading work.LH_AES_sv_unit
+# Loading work.light_hash
+# Compile of LH_AES.sv was successful.
+# Compile of LH_AES_tb.sv was successful.
+# 2 compiles, 0 failed with no errors.
+# Compile of LH_AES.sv was successful.
+# Compile of LH_AES_tb.sv was successful.
+# 2 compiles, 0 failed with no errors.

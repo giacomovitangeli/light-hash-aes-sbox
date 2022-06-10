@@ -7,7 +7,7 @@ module light_hash (
 	,input            rst_n
 	,input			ptxt_char
 	,input			ptxt_valid
-	,output reg [7:0] digest_char
+	,output reg [63:0] digest_char	//64-bit digest --> composition of 8 blocks H[i] of 8-bit
 	,output reg		digest_ready
 	,output reg     err_invalid_ptxt_char //zero as out means error
 	);
@@ -16,23 +16,43 @@ module light_hash (
 	// Variables
 	// ---------------------------------------------------------------------------
 
-	digest_char = NULL_CHAR;	//TODO verify this assignment
+	localparam UPPERCASE_A_CHAR = 8'h41;  // ASCII code for 'A'
+	localparam UPPERCASE_Z_CHAR = 8'h5A;  // ASCII code for 'Z'
+	localparam LOWERCASE_A_CHAR = 8'h61;  // ASCII code for 'a'
+	localparam LOWERCASE_Z_CHAR = 8'h7A;  // ASCII code for 'z'	
+	localparam LOWERBOUND_0_CHAR = 8'h30;  // ASCII code for '0'
+	localparam UPPERBOUND_9_CHAR = 8'h39;  // ASCII code for '9'
+
+	wire       ptxt_char_is_uppercase_letter;
+	wire       ptxt_char_is_lowercase_letter;
+	wire	   ptxt_char_is_number;
+	wire       ptxt_char_is_letter;
 	
-	reg  [7:0] digest_tmp;
+	//assign digest_char = `NULL_CHAR;	//TODO verify this assignment
 	
-	digest_tmp[0] = 8'h34;	
-	digest_tmp[1] = 8'h55;
-	digest_tmp[2] = 8'h0F;
-	digest_tmp[3] = 8'h14;
-	digest_tmp[4] = 8'hDA;
-	digest_tmp[5] = 8'hC0;
-	digest_tmp[6] = 8'h2B;
-	digest_tmp[7] = 8'hEE;
+
+	reg [7:0] digest_tmp = '{8'h34, 8'h55, 8'h0F, 8'h14, 8'hDA, 8'hC0, 8'h2B, 8'hEE};	//8-bit block
 	
 
 	// ---------------------------------------------------------------------------
 	// Logic Design
 	// ---------------------------------------------------------------------------
+
+	assign ptxt_char_is_uppercase_letter = (ptxt_char >= UPPERCASE_A_CHAR) &&
+                                         (ptxt_char <= UPPERCASE_Z_CHAR);
+                                         
+	assign ptxt_char_is_lowercase_letter = (ptxt_char >= LOWERCASE_A_CHAR) &&
+                                         (ptxt_char <= LOWERCASE_Z_CHAR);
+                                         
+	assign ptxt_char_is_letter = ptxt_char_is_uppercase_letter ||
+                               ptxt_char_is_lowercase_letter;
+							   
+	assign ptxt_char_is_number = (ptxt_char >= LOWERBOUND_0_CHAR) &&
+								(ptxt_char <= UPPERBOUND_9_CHAR);
+
+	// assign err_invalid_ptxt_char = !ptxt_char_is_letter or !ptxt_char_is_number;
+	wire err_invalid_ptxt_char_wire = (!ptxt_char_is_letter) && 
+									(!ptxt_char_is_number);
 
 	always @ (posedge clk or negedge rst_n)
 	if(!rst_n) begin
@@ -56,11 +76,11 @@ module light_hash (
 	// Output char (ciphertext)
 	always @ (posedge clk or negedge rst_n)
 	if(!rst_n)
-	  ctxt_char <= `NULL_CHAR;
+	  digest_char <= `NULL_CHAR;
 	else if(err_invalid_ptxt_char_wire)
-	  ctxt_char <= `NULL_CHAR;
+	  digest_char <= `NULL_CHAR;
 	else
-	  ctxt_char <= sub_letter;
+	  digest_char <= digest_tmp;
 
 
 endmodule

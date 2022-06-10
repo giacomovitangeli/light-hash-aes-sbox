@@ -1,10 +1,4 @@
-# Compile of LH_AES.sv failed with 2 errors.
-# Compile of LH_AES_tb.sv was successful.
-# 2 compiles, 1 failed with 2 errors.
-# Compile of LH_AES.sv was successful.
-# Compile of LH_AES_tb.sv was successful.
-# 2 compiles, 0 failed with no errors.
-# Compile of LH_AES.sv was successful.
+# Compile of LH_AES.sv was successful with warnings.
 # Compile of LH_AES_tb.sv was successful.
 # 2 compiles, 0 failed with no errors.
 # Compile of LH_AES.sv was successful.

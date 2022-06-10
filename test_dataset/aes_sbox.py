@@ -33,9 +33,11 @@ aes_sbox = [
         '41', 16), int('99', 16), int('2d', 16), int('0f', 16), int('b0', 16), int('54', 16), int('bb', 16), int('16', 16)]
 ]
 
-def print_aes_sbox():
-    print(hex(aes_sbox[0][0]))
+def print_aes_sbox(x, y):
+    print(hex(aes_sbox[x][y]))
 
+def print_aes_sbox_serialization(x):
+    print(hex(aes_sbox[x]))
 
 def lookup(byte):
     x = byte >> 4

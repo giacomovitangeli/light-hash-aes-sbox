@@ -36,7 +36,7 @@ Z9 o-work work -sv
 Z10 tCvgOpt 0
 vcaesar_ciph_tb_file_enc
 R0
-Z11 !s110 1654887170
+Z11 !s110 1654887591
 !i10b 1
 !s100 k:YAmDI0DkD[5oVDE:YMQ3
 R2
@@ -47,13 +47,13 @@ R4
 Z12 w1654614139
 Z13 8C:/Users/giaco/Documents/ProjectHES/Hardware-and-Embedded-Security/project_930II_21.22_light_hash_algorithm_aes_sbox/tb/LH_AES_tb.sv
 Z14 FC:/Users/giaco/Documents/ProjectHES/Hardware-and-Embedded-Security/project_930II_21.22_light_hash_algorithm_aes_sbox/tb/LH_AES_tb.sv
-!i122 109
+!i122 113
 L0 326 98
 R7
 r1
 !s85 0
 31
-Z15 !s108 1654887170.000000
+Z15 !s108 1654887591.000000
 !s107 C:/Users/giaco/Documents/ProjectHES/Hardware-and-Embedded-Security/project_930II_21.22_light_hash_algorithm_aes_sbox/tb/LH_AES_tb.sv|
 Z16 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/giaco/Documents/ProjectHES/Hardware-and-Embedded-Security/project_930II_21.22_light_hash_algorithm_aes_sbox/tb/LH_AES_tb.sv|
 !i113 1
@@ -70,8 +70,8 @@ R3
 S1
 R4
 R5
-Z17 8C:\Users\giaco\Documents\ProjectHES\Hardware-and-Embedded-Security\project_930II_21.22_light_hash_algorithm_aes_sbox\db\LH_AES.sv
-Z18 FC:\Users\giaco\Documents\ProjectHES\Hardware-and-Embedded-Security\project_930II_21.22_light_hash_algorithm_aes_sbox\db\LH_AES.sv
+8C:\Users\giaco\Documents\ProjectHES\Hardware-and-Embedded-Security\project_930II_21.22_light_hash_algorithm_aes_sbox\db\LH_AES.sv
+FC:\Users\giaco\Documents\ProjectHES\Hardware-and-Embedded-Security\project_930II_21.22_light_hash_algorithm_aes_sbox\db\LH_AES.sv
 !i122 10
 L0 121 88
 R7
@@ -80,60 +80,60 @@ r1
 31
 R8
 !s107 C:\Users\giaco\Documents\ProjectHES\Hardware-and-Embedded-Security\project_930II_21.22_light_hash_algorithm_aes_sbox\db\LH_AES.sv|
-Z19 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:\Users\giaco\Documents\ProjectHES\Hardware-and-Embedded-Security\project_930II_21.22_light_hash_algorithm_aes_sbox\db\LH_AES.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:\Users\giaco\Documents\ProjectHES\Hardware-and-Embedded-Security\project_930II_21.22_light_hash_algorithm_aes_sbox\db\LH_AES.sv|
 !i113 1
 R9
 R10
 XLH_AES_sv_unit
 R0
 R11
-Vg>14zN`WAeh]aEnl<nHF92
+V77X7?kkOJdn@XV9?7jYU43
 r1
 !s85 0
 !i10b 1
 !s100 eeaN^408I5ZOW6`SM8R<N0
-Ig>14zN`WAeh]aEnl<nHF92
+I77X7?kkOJdn@XV9?7jYU43
 !i103 1
 S1
 R4
 w1654887041
-R17
-R18
+Z17 8C:/Users/giaco/Documents/ProjectHES/Hardware-and-Embedded-Security/project_930II_21.22_light_hash_algorithm_aes_sbox/db/LH_AES.sv
+Z18 FC:/Users/giaco/Documents/ProjectHES/Hardware-and-Embedded-Security/project_930II_21.22_light_hash_algorithm_aes_sbox/db/LH_AES.sv
 FC:\Users\giaco\Documents\ProjectHES\Hardware-and-Embedded-Security\project_930II_21.22_light_hash_algorithm_aes_sbox\db\aes_sbox.sv
-!i122 108
+!i122 112
 L0 1 0
 R7
 31
 R15
-Z20 !s107 C:\Users\giaco\Documents\ProjectHES\Hardware-and-Embedded-Security\project_930II_21.22_light_hash_algorithm_aes_sbox\db\aes_sbox.sv|C:\Users\giaco\Documents\ProjectHES\Hardware-and-Embedded-Security\project_930II_21.22_light_hash_algorithm_aes_sbox\db\LH_AES.sv|
-R19
+Z19 !s107 C:\Users\giaco\Documents\ProjectHES\Hardware-and-Embedded-Security\project_930II_21.22_light_hash_algorithm_aes_sbox\db\aes_sbox.sv|C:/Users/giaco/Documents/ProjectHES/Hardware-and-Embedded-Security/project_930II_21.22_light_hash_algorithm_aes_sbox/db/LH_AES.sv|
+Z20 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/giaco/Documents/ProjectHES/Hardware-and-Embedded-Security/project_930II_21.22_light_hash_algorithm_aes_sbox/db/LH_AES.sv|
 !i113 1
 R9
 R10
 n@l@h_@a@e@s_sv_unit
 vlight_hash
 R0
-DXx4 work 14 LH_AES_sv_unit 0 22 g>14zN`WAeh]aEnl<nHF92
+DXx4 work 14 LH_AES_sv_unit 0 22 77X7?kkOJdn@XV9?7jYU43
 R11
 R3
 r1
 !s85 0
 !i10b 1
 !s100 g^gET1ocPLL3Q@;gGQ`=B3
-I?@;<PlGAk6Z[?<GYYO@P[2
+Ih_heA`D:2^UL[6<H<NZ4h3
 !s105 LH_AES_sv_unit
 S1
 R4
 w1654875832
 R17
 R18
-!i122 108
+!i122 112
 L0 5 83
 R7
 31
 R15
-R20
 R19
+R20
 !i113 1
 R9
 R10
@@ -150,7 +150,7 @@ R4
 R12
 R13
 R14
-!i122 109
+!i122 113
 R6
 R7
 r1

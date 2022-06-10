@@ -1,4 +1,4 @@
-C:/Users/giaco/Documents/ProjectHES/Hardware-and-Embedded-Security/project_930II_21.22_light_hash_algorithm_aes_sbox/db/LH_AES.sv {1 {vlog -work work -sv -stats=none {C:\Users\giaco\Documents\ProjectHES\Hardware-and-Embedded-Security\project_930II_21.22_light_hash_algorithm_aes_sbox\db\LH_AES.sv}
+C:/Users/giaco/Documents/ProjectHES/Hardware-and-Embedded-Security/project_930II_21.22_light_hash_algorithm_aes_sbox/db/LH_AES.sv {1 {vlog -work work -sv -stats=none C:/Users/giaco/Documents/ProjectHES/Hardware-and-Embedded-Security/project_930II_21.22_light_hash_algorithm_aes_sbox/db/LH_AES.sv
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
 -- Compiling package LH_AES_sv_unit
 -- Compiling module light_hash

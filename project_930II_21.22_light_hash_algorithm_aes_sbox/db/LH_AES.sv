@@ -68,6 +68,7 @@ module light_hash (
 		for(int r = 0; r < 32; r++) begin
 			for(int i = 0; i < 8; i++) begin
 				digest_tmp[i] = aes128_sbox((digest_tmp[(i+2) % 8] ^ ptxt_char) << i);
+				$display("%b", digest_tmp[i]);
 			end
 		end
 	end

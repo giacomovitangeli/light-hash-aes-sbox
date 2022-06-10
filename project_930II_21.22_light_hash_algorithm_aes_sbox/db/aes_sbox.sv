@@ -1,45 +1,277 @@
-aes_sbox = [
-    [int('63', 16), int('7c', 16), int('77', 16), int('7b', 16), int('f2', 16), int('6b', 16), int('6f', 16), int('c5', 16), int(
-        '30', 16), int('01', 16), int('67', 16), int('2b', 16), int('fe', 16), int('d7', 16), int('ab', 16), int('76', 16)],
-    [int('ca', 16), int('82', 16), int('c9', 16), int('7d', 16), int('fa', 16), int('59', 16), int('47', 16), int('f0', 16), int(
-        'ad', 16), int('d4', 16), int('a2', 16), int('af', 16), int('9c', 16), int('a4', 16), int('72', 16), int('c0', 16)],
-    [int('b7', 16), int('fd', 16), int('93', 16), int('26', 16), int('36', 16), int('3f', 16), int('f7', 16), int('cc', 16), int(
-        '34', 16), int('a5', 16), int('e5', 16), int('f1', 16), int('71', 16), int('d8', 16), int('31', 16), int('15', 16)],
-    [int('04', 16), int('c7', 16), int('23', 16), int('c3', 16), int('18', 16), int('96', 16), int('05', 16), int('9a', 16), int(
-        '07', 16), int('12', 16), int('80', 16), int('e2', 16), int('eb', 16), int('27', 16), int('b2', 16), int('75', 16)],
-    [int('09', 16), int('83', 16), int('2c', 16), int('1a', 16), int('1b', 16), int('6e', 16), int('5a', 16), int('a0', 16), int(
-        '52', 16), int('3b', 16), int('d6', 16), int('b3', 16), int('29', 16), int('e3', 16), int('2f', 16), int('84', 16)],
-    [int('53', 16), int('d1', 16), int('00', 16), int('ed', 16), int('20', 16), int('fc', 16), int('b1', 16), int('5b', 16), int(
-        '6a', 16), int('cb', 16), int('be', 16), int('39', 16), int('4a', 16), int('4c', 16), int('58', 16), int('cf', 16)],
-    [int('d0', 16), int('ef', 16), int('aa', 16), int('fb', 16), int('43', 16), int('4d', 16), int('33', 16), int('85', 16), int(
-        '45', 16), int('f9', 16), int('02', 16), int('7f', 16), int('50', 16), int('3c', 16), int('9f', 16), int('a8', 16)],
-    [int('51', 16), int('a3', 16), int('40', 16), int('8f', 16), int('92', 16), int('9d', 16), int('38', 16), int('f5', 16), int(
-        'bc', 16), int('b6', 16), int('da', 16), int('21', 16), int('10', 16), int('ff', 16), int('f3', 16), int('d2', 16)],
-    [int('cd', 16), int('0c', 16), int('13', 16), int('ec', 16), int('5f', 16), int('97', 16), int('44', 16), int('17', 16), int(
-        'c4', 16), int('a7', 16), int('7e', 16), int('3d', 16), int('64', 16), int('5d', 16), int('19', 16), int('73', 16)],
-    [int('60', 16), int('81', 16), int('4f', 16), int('dc', 16), int('22', 16), int('2a', 16), int('90', 16), int('88', 16), int(
-        '46', 16), int('ee', 16), int('b8', 16), int('14', 16), int('de', 16), int('5e', 16), int('0b', 16), int('db', 16)],
-    [int('e0', 16), int('32', 16), int('3a', 16), int('0a', 16), int('49', 16), int('06', 16), int('24', 16), int('5c', 16), int(
-        'c2', 16), int('d3', 16), int('ac', 16), int('62', 16), int('91', 16), int('95', 16), int('e4', 16), int('79', 16)],
-    [int('e7', 16), int('c8', 16), int('37', 16), int('6d', 16), int('8d', 16), int('d5', 16), int('4e', 16), int('a9', 16), int(
-        '6c', 16), int('56', 16), int('f4', 16), int('ea', 16), int('65', 16), int('7a', 16), int('ae', 16), int('08', 16)],
-    [int('ba', 16), int('78', 16), int('25', 16), int('2e', 16), int('1c', 16), int('a6', 16), int('b4', 16), int('c6', 16), int(
-        'e8', 16), int('dd', 16), int('74', 16), int('1f', 16), int('4b', 16), int('bd', 16), int('8b', 16), int('8a', 16)],
-    [int('70', 16), int('3e', 16), int('b5', 16), int('66', 16), int('48', 16), int('03', 16), int('f6', 16), int('0e', 16), int(
-        '61', 16), int('35', 16), int('57', 16), int('b9', 16), int('86', 16), int('c1', 16), int('1d', 16), int('9e', 16)],
-    [int('e1', 16), int('f8', 16), int('98', 16), int('11', 16), int('69', 16), int('d9', 16), int('8e', 16), int('94', 16), int(
-        '9b', 16), int('1e', 16), int('87', 16), int('e9', 16), int('ce', 16), int('55', 16), int('28', 16), int('df', 16)],
-    [int('8c', 16), int('a1', 16), int('89', 16), int('0d', 16), int('bf', 16), int('e6', 16), int('42', 16), int('68', 16), int(
-        '41', 16), int('99', 16), int('2d', 16), int('0f', 16), int('b0', 16), int('54', 16), int('bb', 16), int('16', 16)]
-]
-
-def print_aes_sbox(x, y):
-    print(hex(aes_sbox[x][y]))
-
-def print_aes_sbox_serialization(x):
-    print(hex(aes_sbox[x]))
-
-def lookup(byte):
-    x = byte >> 4
-    y = byte & 15
-    return aes_sbox[x][y]
+function logic [7:0] aes128_sbox;
+  input [7:0] sbox_in;
+	case (sbox_in[7:0])
+		8'h00:	aes128_sbox[7:0] = 8'h63;
+		8'h01:	aes128_sbox[7:0] = 8'h7c;
+		8'h02:	aes128_sbox[7:0] = 8'h77;
+		8'h03:	aes128_sbox[7:0] = 8'h7b;
+		8'h04:	aes128_sbox[7:0] = 8'hf2;
+		8'h05:	aes128_sbox[7:0] = 8'h6b;
+		8'h06:	aes128_sbox[7:0] = 8'h6f;
+		8'h07:	aes128_sbox[7:0] = 8'hc5;
+		8'h08:	aes128_sbox[7:0] = 8'h30;
+		8'h09:	aes128_sbox[7:0] = 8'h01;
+		8'h0a:	aes128_sbox[7:0] = 8'h67;
+		8'h0b:	aes128_sbox[7:0] = 8'h2b;
+		8'h0c:	aes128_sbox[7:0] = 8'hfe;
+		8'h0d:	aes128_sbox[7:0] = 8'hd7;
+		8'h0e:	aes128_sbox[7:0] = 8'hab;
+		8'h0f:	aes128_sbox[7:0] = 8'h76;
+		//----------------------------
+		8'h10:	aes128_sbox[7:0] = 8'hca;
+		8'h11:	aes128_sbox[7:0] = 8'h82;
+		8'h12:	aes128_sbox[7:0] = 8'hc9;
+		8'h13:	aes128_sbox[7:0] = 8'h7d;
+		8'h14:	aes128_sbox[7:0] = 8'hfa;
+		8'h15:	aes128_sbox[7:0] = 8'h59;
+		8'h16:	aes128_sbox[7:0] = 8'h47;
+		8'h17:	aes128_sbox[7:0] = 8'hf0;
+		8'h18:	aes128_sbox[7:0] = 8'had;
+		8'h19:	aes128_sbox[7:0] = 8'hd4;
+		8'h1a:	aes128_sbox[7:0] = 8'ha2;
+		8'h1b:	aes128_sbox[7:0] = 8'haf;
+		8'h1c:	aes128_sbox[7:0] = 8'h9c;
+		8'h1d:	aes128_sbox[7:0] = 8'ha4;
+		8'h1e:	aes128_sbox[7:0] = 8'h72;
+		8'h1f:	aes128_sbox[7:0] = 8'hc0;
+		//----------------------------
+		8'h20:	aes128_sbox[7:0] = 8'hb7;
+		8'h21:	aes128_sbox[7:0] = 8'hfd;
+		8'h22:	aes128_sbox[7:0] = 8'h93;
+		8'h23:	aes128_sbox[7:0] = 8'h26;
+		8'h24:	aes128_sbox[7:0] = 8'h36;
+		8'h25:	aes128_sbox[7:0] = 8'h3f;
+		8'h26:	aes128_sbox[7:0] = 8'hf7;
+		8'h27:	aes128_sbox[7:0] = 8'hcc;
+		8'h28:	aes128_sbox[7:0] = 8'h34;
+		8'h29:	aes128_sbox[7:0] = 8'ha5;
+		8'h2a:	aes128_sbox[7:0] = 8'he5;
+		8'h2b:	aes128_sbox[7:0] = 8'hf1;
+		8'h2c:	aes128_sbox[7:0] = 8'h71;
+		8'h2d:	aes128_sbox[7:0] = 8'hd8;
+		8'h2e:	aes128_sbox[7:0] = 8'h31;
+		8'h2f:	aes128_sbox[7:0] = 8'h15;
+		//----------------------------
+		8'h30:	aes128_sbox[7:0] = 8'h04;
+		8'h31:	aes128_sbox[7:0] = 8'hc7;
+		8'h32:	aes128_sbox[7:0] = 8'h23;
+		8'h33:	aes128_sbox[7:0] = 8'hc3;
+		8'h34:	aes128_sbox[7:0] = 8'h18;
+		8'h35:	aes128_sbox[7:0] = 8'h96;
+		8'h36:	aes128_sbox[7:0] = 8'h05;
+		8'h37:	aes128_sbox[7:0] = 8'h9a;
+		8'h38:	aes128_sbox[7:0] = 8'h07;
+		8'h39:	aes128_sbox[7:0] = 8'h12;
+		8'h3a:	aes128_sbox[7:0] = 8'h80;
+		8'h3b:	aes128_sbox[7:0] = 8'he2;
+		8'h3c:	aes128_sbox[7:0] = 8'heb;
+		8'h3d:	aes128_sbox[7:0] = 8'h27;
+		8'h3e:	aes128_sbox[7:0] = 8'hb2;
+		8'h3f:	aes128_sbox[7:0] = 8'h75;
+		//----------------------------
+		8'h40:	aes128_sbox[7:0] = 8'h09;
+		8'h41:	aes128_sbox[7:0] = 8'h83;
+		8'h42:	aes128_sbox[7:0] = 8'h2c;
+		8'h43:	aes128_sbox[7:0] = 8'h1a;
+		8'h44:	aes128_sbox[7:0] = 8'h1b;
+		8'h45:	aes128_sbox[7:0] = 8'h6e;
+		8'h46:	aes128_sbox[7:0] = 8'h5a;
+		8'h47:	aes128_sbox[7:0] = 8'ha0;
+		8'h48:	aes128_sbox[7:0] = 8'h52;
+		8'h49:	aes128_sbox[7:0] = 8'h3b;
+		8'h4a:	aes128_sbox[7:0] = 8'hd6;
+		8'h4b:	aes128_sbox[7:0] = 8'hb3;
+		8'h4c:	aes128_sbox[7:0] = 8'h29;
+		8'h4d:	aes128_sbox[7:0] = 8'he3;
+		8'h4e:	aes128_sbox[7:0] = 8'h2f;
+		8'h4f:	aes128_sbox[7:0] = 8'h84;
+		//----------------------------
+		8'h50:	aes128_sbox[7:0] = 8'h53;
+		8'h51:	aes128_sbox[7:0] = 8'hd1;
+		8'h52:	aes128_sbox[7:0] = 8'h00;
+		8'h53:	aes128_sbox[7:0] = 8'hed;
+		8'h54:	aes128_sbox[7:0] = 8'h20;
+		8'h55:	aes128_sbox[7:0] = 8'hfc;
+		8'h56:	aes128_sbox[7:0] = 8'hb1;
+		8'h57:	aes128_sbox[7:0] = 8'h5b;
+		8'h58:	aes128_sbox[7:0] = 8'h6a;
+		8'h59:	aes128_sbox[7:0] = 8'hcb;
+		8'h5a:	aes128_sbox[7:0] = 8'hbe;
+		8'h5b:	aes128_sbox[7:0] = 8'h39;
+		8'h5c:	aes128_sbox[7:0] = 8'h4a;
+		8'h5d:	aes128_sbox[7:0] = 8'h4c;
+		8'h5e:	aes128_sbox[7:0] = 8'h58;
+		8'h5f:	aes128_sbox[7:0] = 8'hcf;
+		//----------------------------
+		8'h60:	aes128_sbox[7:0] = 8'hd0;
+		8'h61:	aes128_sbox[7:0] = 8'hef;
+		8'h62:	aes128_sbox[7:0] = 8'haa;
+		8'h63:	aes128_sbox[7:0] = 8'hfb;
+		8'h64:	aes128_sbox[7:0] = 8'h43;
+		8'h65:	aes128_sbox[7:0] = 8'h4d;
+		8'h66:	aes128_sbox[7:0] = 8'h33;
+		8'h67:	aes128_sbox[7:0] = 8'h85;
+		8'h68:	aes128_sbox[7:0] = 8'h45;
+		8'h69:	aes128_sbox[7:0] = 8'hf9;
+		8'h6a:	aes128_sbox[7:0] = 8'h02;
+		8'h6b:	aes128_sbox[7:0] = 8'h7f;
+		8'h6c:	aes128_sbox[7:0] = 8'h50;
+		8'h6d:	aes128_sbox[7:0] = 8'h3c;
+		8'h6e:	aes128_sbox[7:0] = 8'h9f;
+		8'h6f:	aes128_sbox[7:0] = 8'ha8;
+		//----------------------------
+		8'h70:	aes128_sbox[7:0] = 8'h51;
+		8'h71:	aes128_sbox[7:0] = 8'ha3;
+		8'h72:	aes128_sbox[7:0] = 8'h40;
+		8'h73:	aes128_sbox[7:0] = 8'h8f;
+		8'h74:	aes128_sbox[7:0] = 8'h92;
+		8'h75:	aes128_sbox[7:0] = 8'h9d;
+		8'h76:	aes128_sbox[7:0] = 8'h38;
+		8'h77:	aes128_sbox[7:0] = 8'hf5;
+		8'h78:	aes128_sbox[7:0] = 8'hbc;
+		8'h79:	aes128_sbox[7:0] = 8'hb6;
+		8'h7a:	aes128_sbox[7:0] = 8'hda;
+		8'h7b:	aes128_sbox[7:0] = 8'h21;
+		8'h7c:	aes128_sbox[7:0] = 8'h10;
+		8'h7d:	aes128_sbox[7:0] = 8'hff;
+		8'h7e:	aes128_sbox[7:0] = 8'hf3;
+		8'h7f:	aes128_sbox[7:0] = 8'hd2;
+		//----------------------------
+		8'h80:	aes128_sbox[7:0] = 8'hcd;
+		8'h81:	aes128_sbox[7:0] = 8'h0c;
+		8'h82:	aes128_sbox[7:0] = 8'h13;
+		8'h83:	aes128_sbox[7:0] = 8'hec;
+		8'h84:	aes128_sbox[7:0] = 8'h5f;
+		8'h85:	aes128_sbox[7:0] = 8'h97;
+		8'h86:	aes128_sbox[7:0] = 8'h44;
+		8'h87:	aes128_sbox[7:0] = 8'h17;
+		8'h88:	aes128_sbox[7:0] = 8'hc4;
+		8'h89:	aes128_sbox[7:0] = 8'ha7;
+		8'h8a:	aes128_sbox[7:0] = 8'h7e;
+		8'h8b:	aes128_sbox[7:0] = 8'h3d;
+		8'h8c:	aes128_sbox[7:0] = 8'h64;
+		8'h8d:	aes128_sbox[7:0] = 8'h5d;
+		8'h8e:	aes128_sbox[7:0] = 8'h19;
+		8'h8f:	aes128_sbox[7:0] = 8'h73;
+		//----------------------------
+		8'h90:	aes128_sbox[7:0] = 8'h60;
+		8'h91:	aes128_sbox[7:0] = 8'h81;
+		8'h92:	aes128_sbox[7:0] = 8'h4f;
+		8'h93:	aes128_sbox[7:0] = 8'hdc;
+		8'h94:	aes128_sbox[7:0] = 8'h22;
+		8'h95:	aes128_sbox[7:0] = 8'h2a;
+		8'h96:	aes128_sbox[7:0] = 8'h90;
+		8'h97:	aes128_sbox[7:0] = 8'h88;
+		8'h98:	aes128_sbox[7:0] = 8'h46;
+		8'h99:	aes128_sbox[7:0] = 8'hee;
+		8'h9a:	aes128_sbox[7:0] = 8'hb8;
+		8'h9b:	aes128_sbox[7:0] = 8'h14;
+		8'h9c:	aes128_sbox[7:0] = 8'hde;
+		8'h9d:	aes128_sbox[7:0] = 8'h5e;
+		8'h9e:	aes128_sbox[7:0] = 8'h0b;
+		8'h9f:	aes128_sbox[7:0] = 8'hdb;
+		//----------------------------
+		8'ha0:	aes128_sbox[7:0] = 8'he0;
+		8'ha1:	aes128_sbox[7:0] = 8'h32;
+		8'ha2:	aes128_sbox[7:0] = 8'h3a;
+		8'ha3:	aes128_sbox[7:0] = 8'h0a;
+		8'ha4:	aes128_sbox[7:0] = 8'h49;
+		8'ha5:	aes128_sbox[7:0] = 8'h06;
+		8'ha6:	aes128_sbox[7:0] = 8'h24;
+		8'ha7:	aes128_sbox[7:0] = 8'h5c;
+		8'ha8:	aes128_sbox[7:0] = 8'hc2;
+		8'ha9:	aes128_sbox[7:0] = 8'hd3;
+		8'haa:	aes128_sbox[7:0] = 8'hac;
+		8'hab:	aes128_sbox[7:0] = 8'h62;
+		8'hac:	aes128_sbox[7:0] = 8'h91;
+		8'had:	aes128_sbox[7:0] = 8'h95;
+		8'hae:	aes128_sbox[7:0] = 8'he4;
+		8'haf:	aes128_sbox[7:0] = 8'h79;
+		//----------------------------
+		8'hb0:	aes128_sbox[7:0] = 8'he7;
+		8'hb1:	aes128_sbox[7:0] = 8'hc8;
+		8'hb2:	aes128_sbox[7:0] = 8'h37;
+		8'hb3:	aes128_sbox[7:0] = 8'h6d;
+		8'hb4:	aes128_sbox[7:0] = 8'h8d;
+		8'hb5:	aes128_sbox[7:0] = 8'hd5;
+		8'hb6:	aes128_sbox[7:0] = 8'h4e;
+		8'hb7:	aes128_sbox[7:0] = 8'ha9;
+		8'hb8:	aes128_sbox[7:0] = 8'h6c;
+		8'hb9:	aes128_sbox[7:0] = 8'h56;
+		8'hba:	aes128_sbox[7:0] = 8'hf4;
+		8'hbb:	aes128_sbox[7:0] = 8'hea;
+		8'hbc:	aes128_sbox[7:0] = 8'h65;
+		8'hbd:	aes128_sbox[7:0] = 8'h7a;
+		8'hbe:	aes128_sbox[7:0] = 8'hae;
+		8'hbf:	aes128_sbox[7:0] = 8'h08;
+		//----------------------------
+		8'hc0:	aes128_sbox[7:0] = 8'hba;
+		8'hc1:	aes128_sbox[7:0] = 8'h78;
+		8'hc2:	aes128_sbox[7:0] = 8'h25;
+		8'hc3:	aes128_sbox[7:0] = 8'h2e;
+		8'hc4:	aes128_sbox[7:0] = 8'h1c;
+		8'hc5:	aes128_sbox[7:0] = 8'ha6;
+		8'hc6:	aes128_sbox[7:0] = 8'hb4;
+		8'hc7:	aes128_sbox[7:0] = 8'hc6;
+		8'hc8:	aes128_sbox[7:0] = 8'he8;
+		8'hc9:	aes128_sbox[7:0] = 8'hdd;
+		8'hca:	aes128_sbox[7:0] = 8'h74;
+		8'hcb:	aes128_sbox[7:0] = 8'h1f;
+		8'hcc:	aes128_sbox[7:0] = 8'h4b;
+		8'hcd:	aes128_sbox[7:0] = 8'hbd;
+		8'hce:	aes128_sbox[7:0] = 8'h8b;
+		8'hcf:	aes128_sbox[7:0] = 8'h8a;
+		//----------------------------
+		8'hd0:	aes128_sbox[7:0] = 8'h70;
+		8'hd1:	aes128_sbox[7:0] = 8'h3e;
+		8'hd2:	aes128_sbox[7:0] = 8'hb5;
+		8'hd3:	aes128_sbox[7:0] = 8'h66;
+		8'hd4:	aes128_sbox[7:0] = 8'h48;
+		8'hd5:	aes128_sbox[7:0] = 8'h03;
+		8'hd6:	aes128_sbox[7:0] = 8'hf6;
+		8'hd7:	aes128_sbox[7:0] = 8'h0e;
+		8'hd8:	aes128_sbox[7:0] = 8'h61;
+		8'hd9:	aes128_sbox[7:0] = 8'h35;
+		8'hda:	aes128_sbox[7:0] = 8'h57;
+		8'hdb:	aes128_sbox[7:0] = 8'hb9;
+		8'hdc:	aes128_sbox[7:0] = 8'h86;
+		8'hdd:	aes128_sbox[7:0] = 8'hc1;
+		8'hde:	aes128_sbox[7:0] = 8'h1d;
+		8'hdf:	aes128_sbox[7:0] = 8'h9e;
+		//----------------------------
+		8'he0:	aes128_sbox[7:0] = 8'he1;
+		8'he1:	aes128_sbox[7:0] = 8'hf8;
+		8'he2:	aes128_sbox[7:0] = 8'h98;
+		8'he3:	aes128_sbox[7:0] = 8'h11;
+		8'he4:	aes128_sbox[7:0] = 8'h69;
+		8'he5:	aes128_sbox[7:0] = 8'hd9;
+		8'he6:	aes128_sbox[7:0] = 8'h8e;
+		8'he7:	aes128_sbox[7:0] = 8'h94;
+		8'he8:	aes128_sbox[7:0] = 8'h9b;
+		8'he9:	aes128_sbox[7:0] = 8'h1e;
+		8'hea:	aes128_sbox[7:0] = 8'h87;
+		8'heb:	aes128_sbox[7:0] = 8'he9;
+		8'hec:	aes128_sbox[7:0] = 8'hce;
+		8'hed:	aes128_sbox[7:0] = 8'h55;
+		8'hee:	aes128_sbox[7:0] = 8'h28;
+		8'hef:	aes128_sbox[7:0] = 8'hdf;
+		//----------------------------
+		8'hf0:	aes128_sbox[7:0] = 8'h8c;
+		8'hf1:	aes128_sbox[7:0] = 8'ha1;
+		8'hf2:	aes128_sbox[7:0] = 8'h89;
+		8'hf3:	aes128_sbox[7:0] = 8'h0d;
+		8'hf4:	aes128_sbox[7:0] = 8'hbf;
+		8'hf5:	aes128_sbox[7:0] = 8'he6;
+		8'hf6:	aes128_sbox[7:0] = 8'h42;
+		8'hf7:	aes128_sbox[7:0] = 8'h68;
+		8'hf8:	aes128_sbox[7:0] = 8'h41;
+		8'hf9:	aes128_sbox[7:0] = 8'h99;
+		8'hfa:	aes128_sbox[7:0] = 8'h2d;
+		8'hfb:	aes128_sbox[7:0] = 8'h0f;
+		8'hfc:	aes128_sbox[7:0] = 8'hb0;
+		8'hfd:	aes128_sbox[7:0] = 8'h54;
+		8'hfe:	aes128_sbox[7:0] = 8'hbb;
+		8'hff:	aes128_sbox[7:0] = 8'h16;
+		default: aes128_sbox[7:0] = 8'hXX;
+	endcase
+endfunction 

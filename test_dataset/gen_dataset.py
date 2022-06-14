@@ -28,22 +28,23 @@ print("--------------------")'''
 l = len(prova)
 for j in range(0, l):
     int_str = prova[j]
+    #print(int_str)
     for r in range(0, 32):
             for i in range(0, 8):
                 #print("H mi da: " + str(H[(i+2) % 8]))
                 xor_res = xor(H[(i+2) % 8], int_str)
-                #print(xor_res)
                 #index = xor_res << i
                 index = ISHFTC(xor_res, i, 8)
                 #print("indice: " + str(index))
                 #print(aes_sbox.lookup(index))
-                H[i] = aes_sbox.lookup(index)
+                #print(aes_sbox.get_aes_sbox(index))
+                H[i] = aes_sbox.get_aes_sbox(index)
                 #print("salvo in H: " + str(H[i]))
 
 
 result = ""
 result_int = ""
-for i in range(0,8):
+for i in range(0, 8):
     result_int += str(H[i])
     result += hex(H[i]).split('x')[-1]
 

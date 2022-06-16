@@ -17,7 +17,7 @@ module light_hash_tb_checks;
   reg  [7:0] ptxt_char;
   wire [63:0] ctxt_char;
 
-  LH_AES INSTANCE_NAME (
+  light_hash lh (
      .clk                       (clk)
     ,.rst_n                     (rst_n)
     ,.ptxt_char                 (ptxt_char)

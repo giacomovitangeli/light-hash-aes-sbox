@@ -1,13 +1,14 @@
 `include"aes_sbox.sv"
+`include"LH_functions.sv"
 
 `define NULL_CHAR 8'h00
 
 module light_hash (
-	input            clk
+	input            clk	//1-bit clock
 	,input            rst_n
-	,input			ptxt_char
+	,input		[7:0] ptxt_char	//8-bit input 
 	,input			ptxt_valid
-	,output reg [63:0] digest_char	//64-bit digest --> composition of 8 blocks H[i] of 8-bit
+	,output reg [63:0] digest_char	//64-bit digest output --> composition of 8 blocks H[i] of 8-bit
 	,output reg		digest_ready
 	,output reg     err_invalid_ptxt_char //zero as out means error
 	);
@@ -31,7 +32,7 @@ module light_hash (
 	//assign digest_char = `NULL_CHAR;	//TODO verify this assignment
 	
 
-	reg [7:0] digest_tmp = '{8'h34, 8'h55, 8'h0F, 8'h14, 8'hDA, 8'hC0, 8'h2B, 8'hEE};	//8-bit block
+	reg [7:0] digest_tmp[0:7];	//64-bit temporary digest
 	
 
 	// ---------------------------------------------------------------------------
@@ -67,8 +68,10 @@ module light_hash (
 	if(ptxt_valid) begin
 		for(int r = 0; r < 32; r++) begin
 			for(int i = 0; i < 8; i++) begin
-				digest_tmp[i] = aes128_sbox((digest_tmp[(i+2) % 8] ^ ptxt_char) << i);
-				$display("%b", digest_tmp[i]);
+				for(int j=0; j < 8; j++) begin
+					digest_tmp[i][j] = aes128_sbox((digest_tmp[(i+2) % 8] ^ ptxt_char) << i);
+					$display("%b", digest_tmp[i]);
+				end				
 			end
 		end
 	end

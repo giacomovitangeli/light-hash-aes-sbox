@@ -92,6 +92,9 @@ module light_hash (
 		end
 		next_byte <= 1'b0;
 	end
+	else 
+		next_byte <= 1'b1;
+
 	end
 
 	// Output char (ciphertext)

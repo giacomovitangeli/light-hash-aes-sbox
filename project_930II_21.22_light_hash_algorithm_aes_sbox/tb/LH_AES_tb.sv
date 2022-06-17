@@ -92,10 +92,11 @@ module light_hash_tb_checks;
 							@(posedge clk) ptxt_valid = 1'b1;
 							@(posedge clk) ptxt_char = s0[j];
 						join
+						$display("%s, %d", s0[j], j);
 						@(posedge clk) ptxt_valid = 1'b0;
 						wait(!lh.next_byte) @(posedge clk);
-					end
-				/*1 : foreach(s1[j]) begin
+					end/*
+				1 : foreach(s1[j]) begin
 						fork
 							@(posedge clk) ptxt_valid = 1'b1;
 							@(posedge clk) ptxt_char = s1[j];
@@ -118,7 +119,7 @@ module light_hash_tb_checks;
 						join
 						@(posedge clk) ptxt_valid = 1'b0;
 						wait(!lh.next_byte) @(posedge clk);
-					end*/		
+					end	*/
 			endcase
 			string_out = $sformatf("%0h", digest_char);
 			$display("%s", string_out);
@@ -132,7 +133,7 @@ module light_hash_tb_checks;
 
 		//end
 		@(posedge clk);
-		@(posedge clk) $stop;	
+		@(posedge clk) $stop;		
 	end
 
 endmodule

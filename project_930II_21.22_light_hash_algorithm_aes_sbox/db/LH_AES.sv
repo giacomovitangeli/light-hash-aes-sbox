@@ -36,6 +36,11 @@ module light_hash (
 	// reg to make the circular left shift
 	reg [7:0] shifter;
 
+    reg next_byte = 1'b0;
+	
+	int row, column, index;
+	
+
 	// ---------------------------------------------------------------------------
 	// Logic Design
 	// ---------------------------------------------------------------------------
@@ -63,24 +68,29 @@ module light_hash (
 	  err_invalid_ptxt_char     <= err_invalid_ptxt_char_wire;
 	end
 
+
+	
 	//  Hashing function
 	always @ (*) begin
 	//check plaintext validity
 	if(ptxt_valid) begin
-		gfor(int r = 0; r < 32; r++) begin
+	next_byte <= 1'b1;
+		for(int r = 0; r < 32; r++) begin
+		
 			for(int i = 0; i < 8; i++) begin
 				digest_tmp[i] = (digest_tmp[(i+2) % 8] ^ ptxt_char);
-				shifter = update_digest[j];
+				shifter = digest_tmp[i];
 				digest_tmp[i] = shift_digest(shifter, i);
 				// 4 MSb and the 4 LSb of input byte as row and column of sbox lut to substitute it
         		row = digest_tmp[i][7:4];
         		column = digest_tmp[i][3:0];
         		index = (row * 16) + column;
-				$display("%b", index);
+				//$display("%b", index);
 				digest_tmp[i] = aes128_sbox(index);
-				$display("%b", digest_tmp[i]);
+				//$display("%b", digest_tmp[i]);
 			end
 		end
+		next_byte <= 1'b0;
 	end
 	end
 
@@ -88,12 +98,12 @@ module light_hash (
 	always @ (posedge clk or negedge rst_n)
 	if(!rst_n) begin
 		digest_char <= `NULL_CHAR;
-  	    digest_tmp <= restore_digest();
+  	    restore_digest(digest_tmp);
+		next_byte <= 1'b0;
 	end
 	else if(err_invalid_ptxt_char_wire)
 	  digest_char <= `NULL_CHAR;
 	else
 	  digest_char <= get_digest(digest_tmp);
-
-
+	  
 endmodule

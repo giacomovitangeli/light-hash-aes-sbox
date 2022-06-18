@@ -23,6 +23,27 @@ function [63:0] get_digest(input [7:0] digest[0:7]);
 	get_digest[63:56] = digest[0];
 endfunction
 
+// print the digest
+function [63:0] print_digest(input [7:0] digest[0:7]);
+    string string_out;
+    string_out = $sformatf("%0h", digest[7]);
+    $display("Partial digest hex: %s", string_out);
+    string_out = $sformatf("%0h", digest[6]);
+    $display("Partial digest hex: %s", string_out);
+    string_out = $sformatf("%0h", digest[5]);
+    $display("Partial digest hex: %s", string_out);
+    string_out = $sformatf("%0h", digest[4]);
+    $display("Partial digest hex: %s", string_out);
+    string_out = $sformatf("%0h", digest[3]);
+    $display("Partial digest hex: %s", string_out);
+    string_out = $sformatf("%0h", digest[2]);
+    $display("Partial digest hex: %s", string_out);
+    string_out = $sformatf("%0h", digest[1]);
+    $display("Partial digest hex: %s", string_out);
+    string_out = $sformatf("%0h", digest[0]);
+    $display("Partial digest hex: %s", string_out);
+endfunction
+
 // hard left circular shift
 function reg [7:0] shift_digest(input [7:0] shifter, input [3:0] j);
 	case (j)

@@ -33,21 +33,23 @@ module light_hash (
 
 
 	reg [7:0] digest_tmp[0:7];	//64-bit temporary digest
-	
+
 	// First byte before ptxt_char
 	reg [7:0] start = 8'b11111111;
-	
+
 	// Last byte after ptxt_char
 	reg [7:0] finish = 8'b00000000;
-	
+
 	// reg to make the circular left shift
 	reg [7:0] shifter;
 
     reg next_byte = 1'b0;
-	
+
 	int row, column, index;
-	
-	
+
+	string string_out;
+
+
 
 	// ---------------------------------------------------------------------------
 	// Logic Design
@@ -90,6 +92,8 @@ module light_hash (
 				finish : begin
 					digest_ready <= 1'b1;
 					digest_char <= get_digest(digest_tmp);
+					string_out = $sformatf("%0h", digest_char);
+					$display("Final digest: %s", string_out);
 					next_byte <= 1'b0;
 				end
 				default : begin
@@ -108,6 +112,7 @@ module light_hash (
 							//$display("%b", digest_tmp[i]);
 						end
 					end
+					print_digest(digest_tmp);
 					next_byte <= 1'b0;
 				end
 			endcase
@@ -128,5 +133,5 @@ module light_hash (
 		  digest_char <= `NULL_CHAR;
 		end
 	end
-	  
+
 endmodule

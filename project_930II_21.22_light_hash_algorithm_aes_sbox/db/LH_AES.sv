@@ -36,6 +36,7 @@ module light_hash (
 	
 	// First byte before ptxt_char
 	reg [7:0] start = 8'b11111111;
+	
 	// Last byte after ptxt_char
 	reg [7:0] finish = 8'b00000000;
 	
@@ -79,51 +80,52 @@ module light_hash (
 	
 	//  Hashing function
 	always @ (*) begin
-	
-	if(!rst_n) begin
-		digest_char <= `NULL_CHAR;
-  	    restore_digest(digest_tmp);
-		next_byte <= 1'b0;
-	end
-	else if(err_invalid_ptxt_char_wire)
-		digest_char <= `NULL_CHAR;
-	else if(ptxt_valid) begin	//check plaintext validity
-		case(ptxt_char)
-			start : begin
-				digest_char <= `NULL_CHAR;
-				restore_digest(digest_tmp);
-				next_byte <= 1'b0;
-			end
-			finish : begin
-				digest_ready <= 1'b1;
-				digest_char <= get_digest(digest_tmp);
-				next_byte <= 1'b0;
-			end
-			default : begin
-				//TODO errore caso non voluto, to manage
-			end
-
-		for(int r = 0; r < 32; r++) begin
-		/*if(r == 0) begin
+		//check plaintext validity
+		if(ptxt_valid) begin
+			case(ptxt_char)
+				start : begin
+					digest_char <= `NULL_CHAR;
+					restore_digest(digest_tmp);
+					next_byte <= 1'b0;
+				end
+				finish : begin
+					digest_ready <= 1'b1;
+					digest_char <= get_digest(digest_tmp);
+					next_byte <= 1'b0;
+				end
+				default : begin
 					next_byte <= 1'b1;
-				end*/		
-			for(int i = 0; i < 8; i++) begin
-				digest_tmp[i] = (digest_tmp[(i+2) % 8] ^ ptxt_char);
-				shifter = digest_tmp[i];
-				digest_tmp[i] = shift_digest(shifter, i);
-				// 4 MSb and the 4 LSb of input byte as row and column of sbox lut to substitute it
-        		row = digest_tmp[i][7:4];
-        		column = digest_tmp[i][3:0];
-        		index = (row * 16) + column;
-				//$display("%b", index);
-				digest_tmp[i] = aes128_sbox(index);
-				//$display("%b", digest_tmp[i]);
-			end
+					for(int r = 0; r < 32; r++) begin
+						for(int i = 0; i < 8; i++) begin
+							digest_tmp[i] = (digest_tmp[(i+2) % 8] ^ ptxt_char);
+							shifter = digest_tmp[i];
+							digest_tmp[i] = shift_digest(shifter, i);
+							// 4 MSb and the 4 LSb of input byte as row and column of sbox lut to substitute it
+							row = digest_tmp[i][7:4];
+							column = digest_tmp[i][3:0];
+							index = (row * 16) + column;
+							//$display("%b", index);
+							digest_tmp[i] = aes128_sbox(index);
+							//$display("%b", digest_tmp[i]);
+						end
+					end
+					next_byte <= 1'b0;
+				end
 		end
-		next_byte <= 1'b0;
-	end
-	else 
-		next_byte <= 1'b1;
+		else 
+			next_byte <= 1'b1;
 	end
 
+	// Output char (64-bit digest)
+	always @ (posedge clk or negedge rst_n) begin
+		if(!rst_n) begin
+			digest_char <= `NULL_CHAR;
+			restore_digest(digest_tmp);
+			next_byte <= 1'b0;
+		end
+		else if(err_invalid_ptxt_char_wire) begin
+		  digest_char <= `NULL_CHAR;
+		end
+	end
+	  
 endmodule

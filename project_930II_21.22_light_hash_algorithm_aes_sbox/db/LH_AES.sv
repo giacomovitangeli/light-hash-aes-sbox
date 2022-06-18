@@ -77,7 +77,6 @@ module light_hash (
 	end
 
 
-	
 	//  Hashing function
 	always @ (*) begin
 		//check plaintext validity
@@ -111,9 +110,11 @@ module light_hash (
 					end
 					next_byte <= 1'b0;
 				end
+			endcase
 		end
-		else 
+		else begin
 			next_byte <= 1'b1;
+		end
 	end
 
 	// Output char (64-bit digest)

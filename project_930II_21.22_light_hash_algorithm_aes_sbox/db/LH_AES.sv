@@ -33,12 +33,19 @@ module light_hash (
 
 
 	reg [7:0] digest_tmp[0:7];	//64-bit temporary digest
+	
+	// First byte before ptxt_char
+	reg [7:0] start = 8'b11111111;
+	// Last byte after ptxt_char
+	reg [7:0] finish = 8'b00000000;
+	
 	// reg to make the circular left shift
 	reg [7:0] shifter;
 
     reg next_byte = 1'b0;
 	
 	int row, column, index;
+	
 	
 
 	// ---------------------------------------------------------------------------
@@ -72,11 +79,34 @@ module light_hash (
 	
 	//  Hashing function
 	always @ (*) begin
-	//check plaintext validity
-	if(ptxt_valid) begin
-	next_byte <= 1'b1;
+	
+	if(!rst_n) begin
+		digest_char <= `NULL_CHAR;
+  	    restore_digest(digest_tmp);
+		next_byte <= 1'b0;
+	end
+	else if(err_invalid_ptxt_char_wire)
+		digest_char <= `NULL_CHAR;
+	else if(ptxt_valid) begin	//check plaintext validity
+		case(ptxt_char)
+			start : begin
+				digest_char <= `NULL_CHAR;
+				restore_digest(digest_tmp);
+				next_byte <= 1'b0;
+			end
+			finish : begin
+				digest_ready <= 1'b1;
+				digest_char <= get_digest(digest_tmp);
+				next_byte <= 1'b0;
+			end
+			default : begin
+				//TODO errore caso non voluto, to manage
+			end
+
 		for(int r = 0; r < 32; r++) begin
-		
+		/*if(r == 0) begin
+					next_byte <= 1'b1;
+				end*/		
 			for(int i = 0; i < 8; i++) begin
 				digest_tmp[i] = (digest_tmp[(i+2) % 8] ^ ptxt_char);
 				shifter = digest_tmp[i];
@@ -94,19 +124,6 @@ module light_hash (
 	end
 	else 
 		next_byte <= 1'b1;
-
 	end
 
-	// Output char (ciphertext)
-	always @ (posedge clk or negedge rst_n)
-	if(!rst_n) begin
-		digest_char <= `NULL_CHAR;
-  	    restore_digest(digest_tmp);
-		next_byte <= 1'b0;
-	end
-	else if(err_invalid_ptxt_char_wire)
-	  digest_char <= `NULL_CHAR;
-	else
-	  digest_char <= get_digest(digest_tmp);
-	  
 endmodule

@@ -67,7 +67,7 @@ module light_hash_tb_checks;
 		@(posedge clk) rst_n = 1'b1;
 	end
 	
-	
+	string bin_out;	
 	string string_out;
 
 
@@ -81,10 +81,10 @@ module light_hash_tb_checks;
 		//string s2 = "World123456789";
 		//string s3 = "World123456780";
 		//for (int i = 0; i < 4; i++) begin
-			fork
-				@(posedge clk) ptxt_valid = 1'b1;
-				@(posedge clk) ptxt_char = 8'b11111111;
-			join
+			//fork
+			//	@(posedge clk) ptxt_valid = 1'b1;
+				//@(posedge clk) ptxt_char = 8'b11111111;
+			//join
 			@(posedge clk) ptxt_valid = 1'b0;
 			case (0)//substitute i to zero when uncomment the for iterator
 				0 : foreach(s0[j]) begin
@@ -95,6 +95,10 @@ module light_hash_tb_checks;
 						$display("%s, %d", s0[j], j);
 						@(posedge clk) ptxt_valid = 1'b0;
 						wait(!lh.next_byte) @(posedge clk);
+						bin_out = $sformatf("%b", digest_char);
+						$display("Partial digest bin: %s", bin_out);
+						string_out = $sformatf("%0h", digest_char);
+						$display("Partial digest hex: %s", string_out);
 					end/*
 				1 : foreach(s1[j]) begin
 						fork
@@ -121,15 +125,14 @@ module light_hash_tb_checks;
 						wait(!lh.next_byte) @(posedge clk);
 					end	*/
 			endcase
+			@(posedge clk);
 			string_out = $sformatf("%0h", digest_char);
-			$display("%s", string_out);
-			fork
+			$display("Final digest: %s", string_out);
+			/*fork
 				@(posedge clk) ptxt_valid = 1'b1;
-				@(posedge clk) ptxt_char = 8'b00000000;
-			join
+				//@(posedge clk) ptxt_char = 8'b00000000;
+			join*/
 			@(posedge clk) ptxt_valid = 1'b0;
-			string_out = $sformatf("%0h", digest_char);
-			$display("%s", string_out);
 
 		//end
 		@(posedge clk);

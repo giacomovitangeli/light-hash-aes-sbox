@@ -45,6 +45,12 @@ module light_hash (
 
     reg next_byte = 1'b0;
 
+	// Counter of iteration done on the current char (byte)
+	reg [32:0] count;
+
+	// indicate if the byte is valid and then start to iterate
+	reg hash_enable = 1'b0;
+
 	int row, column, index;
 
 	string string_out;
@@ -71,62 +77,78 @@ module light_hash (
 	wire err_invalid_ptxt_char_wire = (!ptxt_char_is_letter) &&
 									(!ptxt_char_is_number);
 
-	always @ (posedge clk or negedge rst_n)
+	// compute digest
+function unpacked_arr update_digest(input [7:0] digest[0:7]);
+    for (int j = 0; j < 8; j++) begin
+        update_digest[j] = (digest[(j + 2) % 8] ^ ptxt_char);
+		shifter = update_digest[j];
+		update_digest[j] = shift_digest(shifter, j);
+        // 4 MSb and the 4 LSb of input byte as row and column of sbox lut to substitute it
+        row = update_digest[j][7:4];
+        column = update_digest[j][3:0];
+        index = (row * 16) + column;
+        update_digest[j] = aes128_sbox(index);
+	end
+endfunction
+
+	/*always @ (posedge clk or negedge rst_n)
 	if(!rst_n) begin
 	  err_invalid_ptxt_char     <= 1'b0;
 	end else begin
 	  err_invalid_ptxt_char     <= err_invalid_ptxt_char_wire;
-	end
+  end*/
 
 
 	//  Hashing function
 	always @ (*) begin
 		//check plaintext validity
 		if(ptxt_valid) begin
-			case(ptxt_char)
-				start : begin
-					digest_char <= `NULL_CHAR;
-					restore_digest(digest_tmp);
-					next_byte <= 1'b0;
-				end
-				finish : begin
-					digest_ready <= 1'b1;
-					digest_char <= get_digest(digest_tmp);
-					string_out = $sformatf("%0h", digest_char);
-					$display("Final digest: %s", string_out);
-					next_byte <= 1'b0;
-				end
-				default : begin
-					next_byte <= 1'b1;
-					for(int r = 0; r < 32; r++) begin
-						for(int i = 0; i < 8; i++) begin
-							digest_tmp[i] = (digest_tmp[(i+2) % 8] ^ ptxt_char);
-							shifter = digest_tmp[i];
-							digest_tmp[i] = shift_digest(shifter, i);
-							// 4 MSb and the 4 LSb of input byte as row and column of sbox lut to substitute it
-							row = digest_tmp[i][7:4];
-							column = digest_tmp[i][3:0];
-							index = (row * 16) + column;
-							//$display("%b", index);
-							digest_tmp[i] = aes128_sbox(index);
-							//$display("%b", digest_tmp[i]);
-						end
+			// restore counter
+			count <= (ptxt_char == start || ptxt_char == finish) ? 0 : 1;
+			// at next clock cycle, start to iterate over byte
+			hash_enable <= 1'b1;
+		end
+		else if (hash_enable) begin
+			if (count == 0) begin
+				next_byte <= 1'b1;
+			end
+			if (count <= 32) begin
+				case(ptxt_char)
+					start : begin
+						digest_char <= `NULL_CHAR;
+						digest_tmp <= restore_digest();
+						next_byte <= 1'b0;
 					end
-					print_digest(digest_tmp);
-					next_byte <= 1'b0;
-				end
-			endcase
+					finish : begin
+						digest_ready <= 1'b1;
+						digest_char <= get_digest(digest_tmp);
+						//string_out = $sformatf("%0h", digest_char);
+						//$display("Final digest: %s", string_out);
+						next_byte <= 1'b0;
+					end
+					default : begin
+						digest_tmp <= update_digest(digest_tmp);
+						//print_digest(digest_tmp);
+						count <= count + 1;
+					end
+				endcase
+			end
+			else begin
+				// put to 0 and then to 1 in next iteration to wake up the tb
+				next_byte <= 1'b0;
+				count <= 32'd0;
+				hash_enable <= 1'b0;
+			end
 		end
-		else begin
+		else
 			next_byte <= 1'b1;
-		end
 	end
 
 	// Output char (64-bit digest)
 	always @ (posedge clk or negedge rst_n) begin
 		if(!rst_n) begin
 			digest_char <= `NULL_CHAR;
-			restore_digest(digest_tmp);
+			digest_tmp <= restore_digest();
 			next_byte <= 1'b0;
 		end
 		else if(err_invalid_ptxt_char_wire) begin

@@ -1,14 +1,17 @@
+// typedef for the return type of a function to have an unpacked dimension
+typedef reg [7:0] unpacked_arr [0:7];
+parameter unpacked_arr para_1 = '{default:0};
 
 // Init digest
-function reg [7:0] restore_digest(input [7:0] init [0:7]);
-    init[0] = 8'h34;
-	init[1] = 8'h55;
-	init[2] = 8'h0F;
-	init[3] = 8'h14;
-	init[4] = 8'hDA;
-	init[5] = 8'hC0;
-	init[6] = 8'h2B;
-	init[7] = 8'hEE;
+function unpacked_arr restore_digest();
+    restore_digest[0] = 8'h34;
+	restore_digest[1] = 8'h55;
+	restore_digest[2] = 8'h0F;
+	restore_digest[3] = 8'h14;
+	restore_digest[4] = 8'hDA;
+	restore_digest[5] = 8'hC0;
+	restore_digest[6] = 8'h2B;
+	restore_digest[7] = 8'hEE;
 endfunction
 
 // copy the digest to the output

@@ -92,7 +92,7 @@ module light_hash_tb_checks;
 							@(posedge clk) ptxt_valid = 1'b1;
 							@(posedge clk) ptxt_char = s0[j];
 						join
-						$display("%s, %d", s0[j], j);
+						//$display("%s, %d", s0[j], j);
 						@(posedge clk) ptxt_valid = 1'b0;
 						wait(!lh.next_byte) @(posedge clk);
 						/*bin_out = $sformatf("%b", digest_char);
@@ -131,11 +131,13 @@ module light_hash_tb_checks;
 				@(posedge clk) ptxt_char = 8'b00000000;
 			join
 			@(posedge clk) ptxt_valid = 1'b0;
-			string_out = $sformatf("%0h", digest_char);
-			$display("Final digest: %s", string_out);
+			//string_out = $sformatf("%0h", digest_char);
+			//$display("Final digest: %s", string_out);
 
 		//end
 		@(posedge clk);
+		string_out = $sformatf("%0h", digest_char);
+		$display("Final digest: %s", string_out);
 		@(posedge clk) $stop;
 	end
 

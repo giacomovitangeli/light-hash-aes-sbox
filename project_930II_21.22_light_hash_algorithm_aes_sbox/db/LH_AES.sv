@@ -19,9 +19,9 @@ module light_hash (
 // ---------------------------------------------------------------------------
 
 //ASCII code for ' ' (space)
-localparam LOWERBOUND_VALID = 8'h20
+localparam LOWERBOUND_VALID = 8'h20;
 //ASCII code for '~' (tilde)
-localparam UPPERBOUND_VALID = 8'h7E
+localparam UPPERBOUND_VALID = 8'h7E;
 //64-bit temporary digest
 reg [7:0] digest_tmp[0:7];
 //first byte before the message
@@ -44,21 +44,12 @@ int row, column, index;
 // LOGIC DESIGN
 // ---------------------------------------------------------------------------
 
-assign message_byte_is_uppercase_letter = (message_byte >= UPPERCASE_A_CHAR) &&
-                                       (message_byte <= UPPERCASE_Z_CHAR);
+assign message_byte_is_valid = (message_byte >= LOWERBOUND_VALID) &&
+																(message_byte <= UPPERBOUND_VALID);
 
-assign message_byte_is_lowercase_letter = (message_byte >= LOWERCASE_A_CHAR) &&
-                                       (message_byte <= LOWERCASE_Z_CHAR);
-
-assign message_byte_is_letter = message_byte_is_uppercase_letter ||
-                             message_byte_is_lowercase_letter;
-
-assign message_byte_is_number = (message_byte >= LOWERBOUND_0_CHAR) &&
-							(message_byte <= UPPERBOUND_9_CHAR);
 
 // assign err_invalid_message_byte = !message_byte_is_letter or !message_byte_is_number;
-wire err_invalid_message_byte_wire = (!message_byte_is_letter) &&
-								(!message_byte_is_number);
+wire err_invalid_message_byte_wire = (!message_byte_is_valid);
 
 // compute digest
 function unpacked_arr update_digest(input [7:0] digest[0:7]);

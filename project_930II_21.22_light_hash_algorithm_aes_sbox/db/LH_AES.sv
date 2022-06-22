@@ -124,8 +124,8 @@ always @ (posedge clk or negedge rst_n) begin
 		next_byte <= 1'b0;
 	end
 	else if(err_invalid_message_byte) begin
-	  digest <= `NULL_CHAR;
-	$display("Input not valid!!!:");
+		digest_tmp <= restore_digest();
+	   digest <= `NULL_CHAR;
 	end
 end
 

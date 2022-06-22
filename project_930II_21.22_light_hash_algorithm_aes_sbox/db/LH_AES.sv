@@ -74,8 +74,18 @@ endfunction
 
 //  Hashing function
 always @ (*) begin
+	err_invalid_message_byte <= err_invalid_message_byte_wire;
+	if(!rst_n) begin
+		digest <= `NULL_CHAR;
+		digest_tmp <= restore_digest();
+		next_byte <= 1'b0;
+	end
+	else if(err_invalid_message_byte) begin
+		digest_tmp <= restore_digest();
+	   digest <= `NULL_CHAR;
+	end
 	//check plaintext validity
-	if(message_valid) begin
+	else if(message_valid) begin
 		// restore counter
 		itr_counter <= (message_byte == head || message_byte == tail) ? 0 : 1;
 		// at next clock cycle, head to iterate over byte
@@ -116,7 +126,7 @@ always @ (*) begin
 end
 
 // Output char (64-bit digest)
-always @ (posedge clk or negedge rst_n) begin
+/*always @ (posedge clk or negedge rst_n) begin
 	err_invalid_message_byte <= err_invalid_message_byte_wire;
 	if(!rst_n) begin
 		digest <= `NULL_CHAR;
@@ -127,6 +137,6 @@ always @ (posedge clk or negedge rst_n) begin
 		digest_tmp <= restore_digest();
 	   digest <= `NULL_CHAR;
 	end
-end
+end*/
 
 endmodule

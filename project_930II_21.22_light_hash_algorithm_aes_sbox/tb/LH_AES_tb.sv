@@ -38,17 +38,17 @@ module light_hash_tb_checks;
 	initial begin
 		// ----------------- BATTERY TEST 1 -----------------
 
-		string m0 = "abcdefg	hijklmnopqrstuvwxyz";
+		string m0 = "H4rdw4r3	Tr0j4n";
 
-		string m1 = "H4rdw4r3_Tr0j4n";
+		string m1 = "AlessandroAndGiacomo";
 
-		string m2 = "AlessandroAndGiacomo";
+		string m2 = "Nel mezzo del cammin di nostra vita mi ritrovai per una selva oscura, ché la diritta via era smarrita. Ahi quanto a dir qual era è cosa dura esta selva selvaggia e aspra e forte che nel pensier rinova la paura! Tant' è amara che poco è più morte; ma per trattar del ben ch'i' vi trovai, dirò de l'altre cose ch'i' v'ho scorte.";
 
 		string m3 = "3.141592653589793238";
 
-		string d0_expected = "dcdfac61d4981831";
-		string d1_expected = "5aecbf4f5fe467bc";
-		string d2_expected = "e19e79abcdf021f1";
+		string d0_expected = "5aecbf4f5fe467bc";
+		string d1_expected = "e19e79abcdf021f1";
+		string d2_expected = "4562953f89b4d2f5";
 		string d3_expected = "f9e317d512022e21";
 		fork
 			@(posedge clk) message_valid = 1'b1;

@@ -19,9 +19,13 @@ module light_hash (
 // ---------------------------------------------------------------------------
 
 //ASCII code for ' ' (space)
-localparam LOWERBOUND_VALID = 8'h20;
+localparam LOWER_BOUND_0_VALID = 8'h20;
 //ASCII code for '~' (tilde)
-localparam UPPERBOUND_VALID = 8'h7E;
+localparam UPPER_BOUND_0_VALID = 8'h7E;
+//ASCII code lower bound for other valid symbols ('¡')
+localparam LOWER_BOUND_1_VALID = 8'hA1;
+//ASCII code upper bound for other valid symbols ('ÿ')
+localparam UPPER_BOUND_1_VALID = 8'hFF;
 //64-bit temporary digest
 reg [7:0] digest_tmp[0:7];
 //first byte before the message
@@ -44,12 +48,14 @@ int row, column, index;
 // LOGIC DESIGN
 // ---------------------------------------------------------------------------
 
-assign message_byte_is_valid = (message_byte >= LOWERBOUND_VALID) &&
-																(message_byte <= UPPERBOUND_VALID);
+assign message_byte_is_valid = ((message_byte >= LOWER_BOUND_0_VALID) &&
+																(message_byte <= UPPER_BOUND_0_VALID)) ||
+																((message_byte >= LOWER_BOUND_1_VALID) &&
+																(message_byte <= UPPER_BOUND_1_VALID));
 
-
-// assign err_invalid_message_byte = !message_byte_is_letter or !message_byte_is_number;
-wire err_invalid_message_byte_wire = (!message_byte_is_valid);
+wire err_invalid_message_byte_wire = (!message_byte_is_valid) &&
+																			(!(message_byte == head)) &&
+																			(!(message_byte == tail));
 
 // compute digest
 function unpacked_arr update_digest(input [7:0] digest[0:7]);
@@ -111,13 +117,15 @@ end
 
 // Output char (64-bit digest)
 always @ (posedge clk or negedge rst_n) begin
+	err_invalid_message_byte <= err_invalid_message_byte_wire;
 	if(!rst_n) begin
 		digest <= `NULL_CHAR;
 		digest_tmp <= restore_digest();
 		next_byte <= 1'b0;
 	end
-	else if(err_invalid_message_byte_wire) begin
+	else if(err_invalid_message_byte) begin
 	  digest <= `NULL_CHAR;
+	$display("Input not valid!!!:");
 	end
 end
 

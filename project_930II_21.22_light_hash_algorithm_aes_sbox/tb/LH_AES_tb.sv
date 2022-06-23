@@ -36,9 +36,46 @@ module light_hash_tb_checks;
 
 	//simulation
 	initial begin
+		// ----- Jack battery test ----- //
+		string m0 = "abcdefghijklmnopqrstuvwxyz";
+		string d0_expected = "dcdfac61d4981831";
+		fork
+			@(posedge clk) message_valid = 1'b1;
+			@(posedge clk) message_byte = 8'b11111111;
+		join
+		@(posedge clk) message_valid = 1'b0;
+
+		//FIRST STRING
+		foreach(m0[j]) begin
+			fork
+				@(posedge clk) message_valid = 1'b1;
+				@(posedge clk) message_byte = m0[j];
+			join
+			if (err_invalid_message_byte) begin
+				$display("Invalid input, the calculation of the digest is interrupt");
+				not_valid = 1;
+				break;
+			end
+			@(posedge clk) message_valid = 1'b0;
+			wait(!lh.next_byte) @(posedge clk);
+		end
+		fork
+			@(posedge clk) message_valid = 1'b1;
+			@(posedge clk) message_byte = 8'b00000000;
+		join
+		@(posedge clk) message_valid = 1'b0;
+		@(posedge clk);
+		if (!not_valid) begin
+			digest_str = $sformatf("%0h", digest);
+			$display("Digest string 0: %s", digest_str);
+			if(digest_str == d0_expected)
+				$display("Test ok, the digest is equal to the pre-calculate.");
+			else
+				$display("Test failed, the digest is different from to the pre-calculate: ", d0_expected);
+		end
 		// ----------------- BATTERY TEST 1 -----------------
 
-		string m0 = "H4rdw4r3_Tr0j4n";
+		/*string m0 = "H4rdw4r3_Tr0j4n";
 
 		string m1 = "AlessandroAndGiacomo";
 
@@ -46,7 +83,7 @@ module light_hash_tb_checks;
 
 		string m3 = "3.141592653589793238";
 
-		string d0_expected = "f383664d125b1020";
+		string d0_expected = "5aecbf4f5fe467bc";
 		string d1_expected = "e19e79abcdf021f1";
 		string d2_expected = "4562953f89b4d2f5";
 		string d3_expected = "f9e317d512022e21";
@@ -173,7 +210,7 @@ module light_hash_tb_checks;
 	else
 		$display("Test failed, the digest is different from to the pre-calculate: ", d3_expected);
 
-
+		*/
 		@(posedge clk) $stop;
 	end
 

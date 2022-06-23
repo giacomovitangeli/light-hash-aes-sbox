@@ -139,4 +139,22 @@ always @ (*) begin
 
 end
 
+// Output char (64-bit digest)
+/*always @ (posedge clk or negedge rst_n) begin
+	err_invalid_message_byte <= err_invalid_message_byte_wire;
+	if(!rst_n) begin
+		digest <= `NULL_CHAR;
+		digest_tmp <= restore_digest();
+		next_byte <= 1'b0;
+		itr_counter <= 32'd0;
+		digest_ready <= 1'b0;
+		itr_enable <= 1'b0;
+		$display("Entro nel blocco !rst_n");
+	end
+	else if(err_invalid_message_byte) begin
+		digest_tmp <= restore_digest();
+	   digest <= `NULL_CHAR;
+	end
+end*/
+
 endmodule

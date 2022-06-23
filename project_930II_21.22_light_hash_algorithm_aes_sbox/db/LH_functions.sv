@@ -2,6 +2,7 @@
 typedef reg [7:0] unpacked_arr [0:7];
 parameter unpacked_arr para_1 = '{default:0};
 
+/*
 // Init digest
 function unpacked_arr restore_digest();
     restore_digest[0] = 8'h34;
@@ -13,6 +14,7 @@ function unpacked_arr restore_digest();
 	restore_digest[6] = 8'h2B;
 	restore_digest[7] = 8'hEE;
 endfunction
+*/
 
 // copy the digest to the output
 function [63:0] get_digest(input [7:0] digest[0:7]);

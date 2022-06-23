@@ -38,7 +38,7 @@ module light_hash_tb_checks;
 	initial begin
 		// ----------------- BATTERY TEST 1 -----------------
 
-		string m0 = "H4rdw4r3	Tr0j4n";
+		string m0 = "H4rdw4r3_Tr0j4n";
 
 		string m1 = "AlessandroAndGiacomo";
 
@@ -46,7 +46,7 @@ module light_hash_tb_checks;
 
 		string m3 = "3.141592653589793238";
 
-		string d0_expected = "5aecbf4f5fe467bc";
+		string d0_expected = "f383664d125b1020";
 		string d1_expected = "e19e79abcdf021f1";
 		string d2_expected = "4562953f89b4d2f5";
 		string d3_expected = "f9e317d512022e21";

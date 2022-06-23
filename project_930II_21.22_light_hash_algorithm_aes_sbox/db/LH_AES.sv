@@ -37,7 +37,7 @@ reg [7:0] shifter;
 //enable/disable next message_byte as input
 reg next_byte = 1'b0;
 //iteration counter on the message_byte
-reg [32:0] itr_counter;
+reg [32:0] itr_counter = 32'b0;
 //enable/disable the iteration counter
 reg itr_enable = 1'b0;
 //int to perform the aes_sbox function
@@ -84,7 +84,6 @@ always @ (*) begin
 		itr_counter <= 32'd0;
 		digest_ready <= 1'b0;
 		itr_enable <= 1'b0;
-		$display("Entro nel blocco !rst_n");
 	end
 	else if(err_invalid_message_byte) begin
 		digest_tmp <= restore_digest();
@@ -102,10 +101,10 @@ always @ (*) begin
 		itr_enable <= 1'b1;
 	end
 	else if (itr_enable) begin
-		if (itr_counter == 0) begin
-			next_byte <= 1'b1;
-		end
 		if (itr_counter <= 32) begin
+			if (itr_counter == 0) begin
+				next_byte <= 1'b1;
+			end
 			case(message_byte)
 				head : begin
 					digest <= `NULL_CHAR;

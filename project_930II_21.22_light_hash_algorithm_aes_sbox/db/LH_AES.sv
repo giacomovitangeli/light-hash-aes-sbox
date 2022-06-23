@@ -75,18 +75,28 @@ endfunction
 //  Hashing function
 always @ (*) begin
 	err_invalid_message_byte <= err_invalid_message_byte_wire;
+	digest_ready <= 1'b0; // <-- default assignment
+	digest <= `NULL_CHAR;
 	if(!rst_n) begin
 		digest <= `NULL_CHAR;
 		digest_tmp <= restore_digest();
 		next_byte <= 1'b0;
+		itr_counter <= 32'd0;
+		digest_ready <= 1'b0;
+		itr_enable <= 1'b0;
+		$display("Entro nel blocco !rst_n");
 	end
 	else if(err_invalid_message_byte) begin
 		digest_tmp <= restore_digest();
-	   digest <= `NULL_CHAR;
-	end
+	    digest <= `NULL_CHAR;
+	    itr_counter <= 32'd0;
+   	    itr_enable <= 1'b0;
+   end
 	//check plaintext validity
 	else if(message_valid) begin
 		// restore counter
+		//itr_counter = '{default:'0}; // <-- default assignment
+		//digest_ready = '{default:'0}; // <-- default assignment
 		itr_counter <= (message_byte == head || message_byte == tail) ? 0 : 1;
 		// at next clock cycle, head to iterate over byte
 		itr_enable <= 1'b1;
@@ -117,12 +127,17 @@ always @ (*) begin
 		else begin
 			// put to 0 and then to 1 in next iteration to wake up the tb
 			next_byte <= 1'b0;
+			digest_ready <= 1'b0;
 			itr_counter <= 32'd0;
 			itr_enable <= 1'b0;
 		end
 	end
-	else
+	else begin
 		next_byte <= 1'b1;
+		itr_counter <= 32'd0;
+    	itr_enable <= 1'b0;
+	end
+
 end
 
 // Output char (64-bit digest)
@@ -132,6 +147,10 @@ end
 		digest <= `NULL_CHAR;
 		digest_tmp <= restore_digest();
 		next_byte <= 1'b0;
+		itr_counter <= 32'd0;
+		digest_ready <= 1'b0;
+		itr_enable <= 1'b0;
+		$display("Entro nel blocco !rst_n");
 	end
 	else if(err_invalid_message_byte) begin
 		digest_tmp <= restore_digest();

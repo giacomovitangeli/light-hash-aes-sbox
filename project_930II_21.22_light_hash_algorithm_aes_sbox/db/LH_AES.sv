@@ -4,6 +4,7 @@
 `define NULL_CHAR 8'h00
 
 module light_hash (
+	// aggiungere head e tail, perchè altrimenti escludiamo dei valori possibili
 	input            clk	//clock
 	,input            rst_n	//reset
 	,input		[7:0] message_byte	//8-bit input
@@ -18,6 +19,7 @@ module light_hash (
 // VARIABLES
 // ---------------------------------------------------------------------------
 
+// levare controlli perché vanno presi tutti i valori ASCII
 //ASCII code for ' ' (space)
 localparam LOWER_BOUND_0_VALID = 8'h20;
 //ASCII code for '~' (tilde)
@@ -26,6 +28,9 @@ localparam UPPER_BOUND_0_VALID = 8'h7E;
 localparam LOWER_BOUND_1_VALID = 8'hA1;
 //ASCII code upper bound for other valid symbols ('ÿ')
 localparam UPPER_BOUND_1_VALID = 8'hFF;
+
+//init digest
+localparam reg [7:0] restore_digest [0:7] = '{8'h34, 8'h55, 8'h0F, 8'h14, 8'hDA, 8'hC0, 8'h2B, 8'hEE};
 //64-bit temporary digest
 reg [7:0] digest_tmp[0:7];
 //first byte before the message
@@ -73,20 +78,22 @@ endfunction
 
 
 //  Hashing function
-always @ (*) begin
+always @ (*) begin // combinatorio => utilizza gli "uguale"
+	  			   // sequqnziale utilizza i "minore-uguale"
 	err_invalid_message_byte <= err_invalid_message_byte_wire;
 	digest_ready <= 1'b0; // <-- default assignment
 	digest <= `NULL_CHAR;
+	//serve solamente nei circuiti sequanziali
 	if(!rst_n) begin
 		digest <= `NULL_CHAR;
-		digest_tmp <= restore_digest();
+		digest_tmp <= restore_digest;
 		next_byte <= 1'b0;
 		itr_counter <= 32'd0;
 		digest_ready <= 1'b0;
 		itr_enable <= 1'b0;
 	end
 	else if(err_invalid_message_byte) begin
-		digest_tmp <= restore_digest();
+		digest_tmp <= restore_digest;
 	    digest <= `NULL_CHAR;
 	    itr_counter <= 32'd0;
    	    itr_enable <= 1'b0;
@@ -108,7 +115,7 @@ always @ (*) begin
 			case(message_byte)
 				head : begin
 					digest <= `NULL_CHAR;
-					digest_tmp <= restore_digest();
+					digest_tmp <= restore_digest;
 					next_byte <= 1'b0;
 				end
 				tail : begin
@@ -139,22 +146,5 @@ always @ (*) begin
 
 end
 
-// Output char (64-bit digest)
-/*always @ (posedge clk or negedge rst_n) begin
-	err_invalid_message_byte <= err_invalid_message_byte_wire;
-	if(!rst_n) begin
-		digest <= `NULL_CHAR;
-		digest_tmp <= restore_digest();
-		next_byte <= 1'b0;
-		itr_counter <= 32'd0;
-		digest_ready <= 1'b0;
-		itr_enable <= 1'b0;
-		$display("Entro nel blocco !rst_n");
-	end
-	else if(err_invalid_message_byte) begin
-		digest_tmp <= restore_digest();
-	   digest <= `NULL_CHAR;
-	end
-end*/
 
 endmodule

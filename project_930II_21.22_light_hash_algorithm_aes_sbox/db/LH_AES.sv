@@ -21,8 +21,19 @@ module light_hash (
 
 
 //init digest
-localparam reg [7:0] restore_digest [0:7] = '{8'h34, 8'h55, 8'h0F, 8'h14, 8'hDA, 8'hC0, 8'h2B, 8'hEE};
+//localparam reg [7:0] restore_digest [0:7] = '{8'h34, 8'h55, 8'h0F, 8'h14, 8'hDA, 8'hC0, 8'h2B, 8'hEE};
 
+// Initialize digest
+function unpacked_arr restore_digest;
+    restore_digest[0] = 8'h34;
+	restore_digest[1] = 8'h55;
+	restore_digest[2] = 8'h0F;
+	restore_digest[3] = 8'h14;
+	restore_digest[4] = 8'hDA;
+	restore_digest[5] = 8'hC0;
+	restore_digest[6] = 8'h2B;
+	restore_digest[7] = 8'hEE;
+endfunction
 
 //64-bit temporary digest
 reg [7:0] digest_tmp[0:7];
@@ -30,12 +41,11 @@ reg [7:0] digest_tmp[0:7];
 reg [7:0] shifter;
 //enable/disable next message_byte as input
 reg next_byte = 1'b0;
-//iteration counter on the message_byte
-reg [32:0] itr_counter = 32'b0;
-//enable/disable the iteration counter
-reg itr_enable = 1'b0;
+// enable output sequential always
+reg tmp_digest_ready;
 //int to perform the aes_sbox function
-int row, column, index;
+int row, column, index, r;
+
 
 
 // ---------------------------------------------------------------------------
@@ -57,82 +67,72 @@ function unpacked_arr update_digest(input [7:0] digest[0:7]);
 end
 endfunction
 
+//  combinational always
+always @ (*) begin
 
-//  Hashing function
-always @ (*) begin // combinatorio => utilizza gli "uguale"
-	  			   // sequqnziale utilizza i "minore-uguale"
-	digest_ready <= 1'b0; // <-- default assignment
-	digest <= `NULL_CHAR;
-	//serve solamente nei circuiti sequanziali
-	/*if(!rst_n) begin
-		digest = `NULL_CHAR;
-		digest_tmp = restore_digest;
-		next_byte = 1'b0;
-		itr_counter = 32'd0;
-		digest_ready = 1'b0;
-		itr_enable = 1'b0;
-		$display("Sono entrato nel reset");
-	end*/
-	//check plaintext validity
 	if(message_valid) begin
-		// restore counter
-		//itr_counter = '{default:'0}; // <-- default assignment
-		//digest_ready = '{default:'0}; // <-- default assignment
-		if ((state == head || state == tail))
-			itr_counter <= 0;
-		else
-			itr_counter <= 1;
-		//itr_counter <= (state == head || state == tail) ? 0 : 1;
-		// at next clock cycle, head to iterate over byte
-		itr_enable <= 1'b1;
-	end
-	else if (itr_enable) begin
-		if (itr_counter <= 32) begin
-			if (itr_counter == 0) begin
-				next_byte <= 1'b1;
+		case(state)
+			head : begin
+				tmp_digest_ready = 1'b0;
+				digest_tmp = restore_digest();
+				next_byte = 1'b0;
+				r = 0;
 			end
-			case(state)
-				head : begin
-					digest <= `NULL_CHAR;
-					digest_tmp <= restore_digest;
-					next_byte <= 1'b0;
-					itr_counter <= 0;
+			tail : begin
+				tmp_digest_ready = 1'b1;
+				next_byte = 1'b0;
+				r = 0;
+			end
+			message : begin
+				for(r = 0; r < 32; r++) begin
+					if (r == 0) begin
+						next_byte = 1'b1;
+					end
+					digest_tmp = update_digest(digest_tmp);
 				end
-				tail : begin
-					digest_ready <= 1'b1;
-					digest <= get_digest(digest_tmp);
-					next_byte <= 1'b0;
-					itr_counter <= 0;
-				end
-				message : begin
-					digest_tmp <= update_digest(digest_tmp);
-					//print_digest(digest_tmp);
-					itr_counter <= itr_counter + 1;
-				end
-				default : begin
-					$display("Error, case 11");
-					digest_tmp <= update_digest(digest_tmp);
-					//print_digest(digest_tmp);
-					itr_counter <= itr_counter + 1;
-				end
-			endcase
-			itr_enable <= 1'b1;
-		end
-		else begin
-			// put to 0 and then to 1 in next iteration to wake up the tb
-			next_byte <= 1'b0;
-			digest_ready <= 1'b0;
-			itr_counter <= 32'd0;
-			itr_enable <= 1'b0;
-		end
+				// put to 0 and then to 1 in next iteration to wake up the tb
+				next_byte = 1'b0;
+				tmp_digest_ready = 1'b0;
+
+			end
+			default : begin
+				tmp_digest_ready = 1'b0;
+				$display("Error default case");
+				r = 0;
+			end
+		endcase
 	end
 	else begin
-		next_byte <= 1'b1;
-		itr_counter <= 32'd0;
-    	itr_enable <= 1'b0;
+		tmp_digest_ready = 1'b0;
+		next_byte = 1'b1;
+		r = 0;
 	end
-
 end
+
+// sequential always
+always @(posedge clk or negedge rst_n) begin
+	// Handling the rst_n signal
+	if(!rst_n) begin
+		digest_ready <= 1'b0;
+		digest <= `NULL_CHAR;
+	end
+    else begin
+		// Handling outputs of the module
+		if(tmp_digest_ready) begin
+			// Branch in which the digest has been computed properly
+			digest_ready <= 1'b1;
+			digest <= get_digest(digest_tmp);
+		end
+		else begin
+			// Branch in which the digest hasn't been computed properly
+			digest_ready <= 1'b0;
+			digest <= `NULL_CHAR;
+		end
+	end
+end
+
+
+
 
 
 endmodule

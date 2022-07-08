@@ -4,7 +4,6 @@
 `define NULL_CHAR 8'h00
 
 module light_hash (
-	// aggiungere head e tail, perchè altrimenti escludiamo dei valori possibili
 	input              clk			    //clock
 	,input             rst_n			//reset
 	,input		[7:0]  message_byte	    //8-bit input
@@ -21,19 +20,8 @@ module light_hash (
 
 
 //init digest
-//localparam reg [7:0] restore_digest [0:7] = '{8'h34, 8'h55, 8'h0F, 8'h14, 8'hDA, 8'hC0, 8'h2B, 8'hEE};
+localparam reg [7:0] restore_digest [0:7] = '{8'h34, 8'h55, 8'h0F, 8'h14, 8'hDA, 8'hC0, 8'h2B, 8'hEE};
 
-// Initialize digest
-function unpacked_arr restore_digest;
-    restore_digest[0] = 8'h34;
-	restore_digest[1] = 8'h55;
-	restore_digest[2] = 8'h0F;
-	restore_digest[3] = 8'h14;
-	restore_digest[4] = 8'hDA;
-	restore_digest[5] = 8'hC0;
-	restore_digest[6] = 8'h2B;
-	restore_digest[7] = 8'hEE;
-endfunction
 
 //64-bit temporary digest
 reg [7:0] digest_tmp[0:7];
@@ -56,10 +44,9 @@ int row, column, index, r;
 // compute digest
 function unpacked_arr update_digest(input [7:0] digest[0:7]);
   for (int j = 0; j < 8; j++) begin
-      update_digest[j] = (digest[(j + 2) % 8] ^ message_byte);
-	shifter = update_digest[j];
-	update_digest[j] = shift_digest(shifter, j);
-      // 4 MSb and the 4 LSb of input byte as row and column of sbox lut to substitute it
+	  update_digest[j] = (digest[(j + 2) % 8] ^ message_byte);
+	  shifter = update_digest[j];
+	  update_digest[j] = shift_digest(shifter, j);
       row = update_digest[j][7:4];
       column = update_digest[j][3:0];
       index = (row * 16) + column;
@@ -74,7 +61,7 @@ always @ (*) begin
 		case(state)
 			head : begin
 				tmp_digest_ready = 1'b0;
-				digest_tmp = restore_digest();
+				digest_tmp = restore_digest;
 				next_byte = 1'b0;
 				r = 0;
 			end
@@ -111,20 +98,17 @@ end
 
 // sequential always
 always @(posedge clk or negedge rst_n) begin
-	// Handling the rst_n signal
+
 	if(!rst_n) begin
 		digest_ready <= 1'b0;
 		digest <= `NULL_CHAR;
 	end
     else begin
-		// Handling outputs of the module
 		if(tmp_digest_ready) begin
-			// Branch in which the digest has been computed properly
 			digest_ready <= 1'b1;
 			digest <= get_digest(digest_tmp);
 		end
 		else begin
-			// Branch in which the digest hasn't been computed properly
 			digest_ready <= 1'b0;
 			digest <= `NULL_CHAR;
 		end

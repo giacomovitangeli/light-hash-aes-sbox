@@ -4,7 +4,6 @@
 module light_hash_tb_checks;
 
 	reg clk = 1'b0;				// set the clock to 0
-	always #10 clk = !clk; 		// set the clock time
 
 	reg message_valid = 1'b0;   // set the register message_valid to 0
 	reg [1:0] state = 2'b11;
@@ -32,63 +31,33 @@ module light_hash_tb_checks;
 	localparam  tail = 2'b01;
 	localparam  message = 2'b10;
 
-	/*initial begin
+	always #10 clk = !clk; 		// set the clock time
+
+	initial begin
 		@(posedge clk) rst_n = 1'b1;
-	end*/
+	end
 
 	//string rapresentation of the final digest and the error string
-	string digest_str, err_str;
+	string digest_str, digest_str2, err_str;
 
 	//simulation
 	initial begin
-		// ----- Jack battery test ----- //
-		/*string m0 = "abcdefghijklmnopqrstuvwxyz";
-		string d0_expected = "dcdfac61d4981831";
-		fork
-			@(posedge clk) message_valid = 1'b1;
-			@(posedge clk) state = head;
-		join
-		@(posedge clk) message_valid = 1'b0;
-
-		//FIRST STRING
-		foreach(m0[j]) begin
-			fork
-				@(posedge clk) message_valid = 1'b1;
-				@(posedge clk) state = message;
-				@(posedge clk) message_byte = m0[j];
-			join
-			@(posedge clk) message_valid = 1'b0;
-			wait(!lh.next_byte) @(posedge clk);
-		end
-		fork
-			@(posedge clk) message_valid = 1'b1;
-			@(posedge clk) state = tail;
-		join
-		@(posedge clk) message_valid = 1'b0;
-		@(posedge clk);
-
-		digest_str = $sformatf("%0h", digest);
-		$display("Digest string 0: %s", digest_str);
-		if(digest_str == d0_expected)
-			$display("Test ok, the digest is equal to the pre-calculate.");
-		else
-			$display("Test failed, the digest is different from to the pre-calculate: ", d0_expected);*/
-
 
 		// ----------------- BATTERY TEST 1 -----------------
-
 		string m0 = "H4rdw4r3_Tr0j4n";
-
-		string m1 = "AlessandroAndGiacomo";
-
-		string m2 = "Nel mezzo del cammin di nostra vita mi ritrovai per una selva oscura, ché la diritta via era smarrita. Ahi quanto a dir qual era è cosa dura esta selva selvaggia e aspra e forte che nel pensier rinova la paura! Tant' è amara che poco è più morte; ma per trattar del ben ch'i' vi trovai, dirò de l'altre cose ch'i' v'ho scorte.";
-
-		string m3 = "3.141592653589793238";
+		string m1 = "Nel mezzo del cammin di nostra vita mi ritrovai per una selva oscura, ché la diritta via era smarrita. Ahi quanto a dir qual era è cosa dura esta selva selvaggia e aspra e forte che nel pensier rinova la paura! Tant' è amara che poco è più morte; ma per trattar del ben ch'i' vi trovai, dirò de l'altre cose ch'i' v'ho scorte.";
+		string m2 = "3.141592653589793238";
 
 		string d0_expected = "5aecbf4f5fe467bc";
-		string d1_expected = "e19e79abcdf021f1";
-		string d2_expected = "4562953f89b4d2f5";
-		string d3_expected = "f9e317d512022e21";
+		string d1_expected = "4562953f89b4d2f5";
+		string d2_expected = "f9e317d512022e21";
+
+		string hp1 = "AlessandroAndGiacomo";
+		string hp2 = "AlessandroandGiacomo";
+
+		string hp1_expected = "e19e79abcdf021f1";
+		string hp2_expected = "48f63b14b5c40a5a";
+
 		fork
 			@(posedge clk) message_valid = 1'b1;
 			@(posedge clk) state = head;
@@ -117,10 +86,7 @@ module light_hash_tb_checks;
 		if(digest_str == d0_expected)
 			$display("Test ok, the digest is equal to the pre-calculate.");
 		else
-			$display("Test failed, the digest is different from to the pre-calculate: ", d0_expected);
-
-
-
+			$display("Test failed, the digest is different from to the pre-calculate: %s", d0_expected);
 
 		//SECOND STRING
 		fork
@@ -149,7 +115,7 @@ module light_hash_tb_checks;
 		if(digest_str == d1_expected)
 			$display("Test ok, the digest is equal to the pre-calculate.");
 		else
-			$display("Test failed, the digest is different from to the pre-calculate: ", d1_expected);
+			$display("Test failed, the digest is different from to the pre-calculate: %s", d1_expected);
 
 
 		//THIRD STRING
@@ -178,22 +144,24 @@ module light_hash_tb_checks;
 		$display("Digest string 2: %s", digest_str);
 		if(digest_str == d2_expected)
 			$display("Test ok, the digest is equal to the pre-calculate.");
-		else
-			$display("Test failed, the digest is different from to the pre-calculate: ", d2_expected);
+	    else
+			$display("Test failed, the digest is different from to the pre-calculate: %s", d2_expected);
 
+		// ------ HASH PROPERTIES ----- //
+		// Verify that two identical strings except for one character
+		// produce an hash different at all
 
-		//FOURTH STRING
 		fork
 			@(posedge clk) message_valid = 1'b1;
 			@(posedge clk) state = head;
 		join
 		@(posedge clk) message_valid = 1'b0;
 
-		foreach(m3[j]) begin
+		foreach(hp1[j]) begin
 			fork
 				@(posedge clk) message_valid = 1'b1;
 				@(posedge clk) state = message;
-				@(posedge clk) message_byte = m3[j];
+				@(posedge clk) message_byte = hp1[j];
 			join
 			@(posedge clk) message_valid = 1'b0;
 			wait(!lh.next_byte) @(posedge clk);
@@ -205,13 +173,36 @@ module light_hash_tb_checks;
 		@(posedge clk) message_valid = 1'b0;
 		@(posedge clk);
 		digest_str = $sformatf("%0h", digest);
-		$display("Digest string 3: %s", digest_str);
-		if(digest_str == d3_expected)
-			$display("Test ok, the digest is equal to the pre-calculate.");
-	    else
-			$display("Test failed, the digest is different from to the pre-calculate: ", d3_expected);
 
-		*/
+		fork
+			@(posedge clk) message_valid = 1'b1;
+			@(posedge clk) state = head;
+		join
+		@(posedge clk) message_valid = 1'b0;
+
+		foreach(hp2[j]) begin
+			fork
+				@(posedge clk) message_valid = 1'b1;
+				@(posedge clk) state = message;
+				@(posedge clk) message_byte = hp2[j];
+			join
+			@(posedge clk) message_valid = 1'b0;
+			wait(!lh.next_byte) @(posedge clk);
+		end
+		fork
+			@(posedge clk) message_valid = 1'b1;
+			@(posedge clk) state = tail;
+		join
+		@(posedge clk) message_valid = 1'b0;
+		@(posedge clk);
+		digest_str2 = $sformatf("%0h", digest);
+		$display("\n\nString hp1: %s, vs string hp2: %s", hp1, hp2);
+		$display("Digest hp1: %s, vs digest hp2: %s", digest_str, digest_str2);
+		if((digest_str == hp1_expected) && (digest_str2 == hp2_expected))
+			$display("Test ok, the digest is equal to the pre-calculate.\n\n");
+		else
+			$display("Test failed, the digest is different from to the pre-calculate: %s\n\n", d1_expected);
+
 		@(posedge clk) $stop;
 	end
 

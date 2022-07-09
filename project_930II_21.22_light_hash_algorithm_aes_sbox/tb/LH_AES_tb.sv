@@ -84,9 +84,9 @@ module light_hash_tb_checks;
 		digest_str = $sformatf("%0h", digest);
 		$display("Digest string 0: %s", digest_str);
 		if(digest_str == d0_expected)
-			$display("Test ok, the digest is equal to the pre-calculate.");
+			$display("Test ok, the digest is equal to the pre-calculated one.");
 		else
-			$display("Test failed, the digest is different from to the pre-calculate: %s", d0_expected);
+			$display("Test failed, the digest is different from pre-calculated one: %s", d0_expected);
 
 		//SECOND STRING
 		fork
@@ -113,9 +113,9 @@ module light_hash_tb_checks;
 		digest_str = $sformatf("%0h", digest);
 		$display("Digest string 1: %s", digest_str);
 		if(digest_str == d1_expected)
-			$display("Test ok, the digest is equal to the pre-calculate.");
+			$display("Test ok, the digest is equal to the pre-calculated one.");
 		else
-			$display("Test failed, the digest is different from to the pre-calculate: %s", d1_expected);
+			$display("Test failed, the digest is different from pre-calculated one: %s", d1_expected);
 
 
 		//THIRD STRING
@@ -143,9 +143,9 @@ module light_hash_tb_checks;
 		digest_str = $sformatf("%0h", digest);
 		$display("Digest string 2: %s", digest_str);
 		if(digest_str == d2_expected)
-			$display("Test ok, the digest is equal to the pre-calculate.");
+			$display("Test ok, the digest is equal to the pre-calculated one.");
 	    else
-			$display("Test failed, the digest is different from to the pre-calculate: %s", d2_expected);
+			$display("Test failed, the digest is different from pre-calculated one: %s", d2_expected);
 
 		// ------ HASH PROPERTIES ----- //
 		// Verify that two identical strings except for one character
@@ -199,9 +199,9 @@ module light_hash_tb_checks;
 		$display("\n\nString hp1: %s, vs string hp2: %s", hp1, hp2);
 		$display("Digest hp1: %s, vs digest hp2: %s", digest_str, digest_str2);
 		if((digest_str == hp1_expected) && (digest_str2 == hp2_expected))
-			$display("Test ok, the digest is equal to the pre-calculate.\n\n");
+			$display("Test ok, the digest is equal to the pre-calculated one.\n\n");
 		else
-			$display("Test failed, the digest is different from to the pre-calculate: %s\n\n", d1_expected);
+			$display("Test failed, the digest is different from pre-calculated one: %s\n\n", d1_expected);
 
 		@(posedge clk) $stop;
 	end

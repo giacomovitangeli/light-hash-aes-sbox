@@ -1,11 +1,11 @@
 // -----------------------------------------------------------------------------
-// ---- Testbench of light hash module for debug and corner cases check
+// ---- Testbench of light hash module for debug and to perform the Battery test
 // -----------------------------------------------------------------------------
 module light_hash_tb_checks;
 
 	reg clk = 1'b0;				// set the clock to 0
 
-	reg message_valid = 1'b0;   // set the register message_valid to 0
+	reg message_valid = 1'b0;   // validity of the register is 0 by default
 	reg [1:0] state = 2'b11;
 
 	reg rst_n = 1'b0;			// set the reset register to 0
@@ -84,9 +84,9 @@ module light_hash_tb_checks;
 		digest_str = $sformatf("%0h", digest);
 		$display("Digest string 0: %s", digest_str);
 		if(digest_str == d0_expected)
-			$display("Test ok, the digest is equal to the pre-calculated one.");
+			$display("Test ok, the digest is equal to the pre-calculated.");
 		else
-			$display("Test failed, the digest is different from pre-calculated one: %s", d0_expected);
+			$display("Test failed, the digest is different from pre-calculated: %s", d0_expected);
 
 		//SECOND STRING
 		fork
@@ -113,9 +113,9 @@ module light_hash_tb_checks;
 		digest_str = $sformatf("%0h", digest);
 		$display("Digest string 1: %s", digest_str);
 		if(digest_str == d1_expected)
-			$display("Test ok, the digest is equal to the pre-calculated one.");
+			$display("Test ok, the digest is equal to the pre-calculated.");
 		else
-			$display("Test failed, the digest is different from pre-calculated one: %s", d1_expected);
+			$display("Test failed, the digest is different from pre-calculated: %s", d1_expected);
 
 
 		//THIRD STRING
@@ -143,9 +143,9 @@ module light_hash_tb_checks;
 		digest_str = $sformatf("%0h", digest);
 		$display("Digest string 2: %s", digest_str);
 		if(digest_str == d2_expected)
-			$display("Test ok, the digest is equal to the pre-calculated one.");
+			$display("Test ok, the digest is equal to the pre-calculated.");
 	    else
-			$display("Test failed, the digest is different from pre-calculated one: %s", d2_expected);
+			$display("Test failed, the digest is different from pre-calculated: %s", d2_expected);
 
 		// ------ HASH PROPERTIES ----- //
 		// Verify that two identical strings except for one character
@@ -199,9 +199,9 @@ module light_hash_tb_checks;
 		$display("\n\nString hp1: %s, vs string hp2: %s", hp1, hp2);
 		$display("Digest hp1: %s, vs digest hp2: %s", digest_str, digest_str2);
 		if((digest_str == hp1_expected) && (digest_str2 == hp2_expected))
-			$display("Test ok, the digest is equal to the pre-calculated one.\n\n");
+			$display("Test ok, the digest is equal to the pre-calculated.\n\n");
 		else
-			$display("Test failed, the digest is different from pre-calculated one: %s\n\n", d1_expected);
+			$display("Test failed, the digest is different from pre-calculated: %s\n\n", d1_expected);
 
 		@(posedge clk) $stop;
 	end

@@ -3,12 +3,13 @@
 
 `define NULL_CHAR 8'h00
 
+
 module light_hash (
 	input              clk			    // clock
 	,input             rst_n			// reset
 	,input		[7:0]  message_byte	    // 8 bit input
 	,input			   message_valid	// define the validity of the input 8 bit message
-	,input 		[1:0]  state			// state = 2'b00 => head of the messagge, 2'b01 => tail, 2'b10 message e default 2'b11
+	,input 		[1:0]  state			// state = 2'b00 => HEAD of the messagge, 2'b01 => TAIL, 2'b10 MESSAGE e default 2'b11
 	,output reg [63:0] digest	        // 64 bit digest output --> composition of 8 blocks H[i] of 8 bit
 	,output reg		   digest_ready	    // hash function of the input message is completed
 	);
@@ -65,21 +66,21 @@ always @ (*) begin
 	if(message_valid) begin
 		case(state)
 			// inizialization stage is performed
-			head : begin
+			HEAD : begin
 				tmp_digest_ready = 1'b0;
 				digest_tmp = restore_digest;
 				next_byte = 1'b0;
 				r = 0;
 			end
 			// output stage is performed
-			tail : begin
+			TAIL : begin
 				// enable the sequential always
 				tmp_digest_ready = 1'b1;
 				next_byte = 1'b0;
 				r = 0;
 			end
 			// computation stage is performed
-			message : begin
+			MESSAGE : begin
 				for(r = 0; r < 32; r++) begin
 					if (r == 0) begin
 						// enable next message byte input from the Testbench

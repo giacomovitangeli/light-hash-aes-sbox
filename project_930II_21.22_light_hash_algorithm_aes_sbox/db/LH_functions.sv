@@ -1,10 +1,9 @@
-// typedef for the return type of a function to have an unpacked dimension
 typedef reg [7:0] unpacked_arr [0:7];
 parameter unpacked_arr para_1 = '{default:0};
 
-localparam  head = 2'b00;
-localparam  tail = 2'b01;
-localparam  message = 2'b10;
+localparam  HEAD = 2'b00;
+localparam  TAIL = 2'b01;
+localparam  MESSAGE = 2'b10;
 
 // copy the digest to the output
 function [63:0] get_digest(input [7:0] digest[0:7]);

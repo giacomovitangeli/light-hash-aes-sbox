@@ -37,6 +37,7 @@ module light_hash_tb_checks;
 	initial begin
 
 		// BATTERY TEST
+
 		//input messages to test
 		string m0 = "H4rdw4r3_Tr0j4n";
 		string m1 = "Nel mezzo del cammin di nostra vita mi ritrovai per una selva oscura, ché la diritta via era smarrita. Ahi quanto a dir qual era è cosa dura esta selva selvaggia e aspra e forte che nel pensier rinova la paura! Tant' è amara che poco è più morte; ma per trattar del ben ch'i' vi trovai, dirò de l'altre cose ch'i' v'ho scorte.";
@@ -48,13 +49,13 @@ module light_hash_tb_checks;
 		string d2_expected = "f9e317d512022e21";
 
 		//input messages to check hash property
-		string hp1 = "AlessandroAndGiacomo";
-		string hp2 = "AlessandroandGiacomo";
+		string hp00 = "AlessandroAndGiacomo";
+		string hp01 = "AlessandroandGiacomo";
+		string hp10 = "Hardware_and_Embedded_Security";
+		string hp11 = "Hardware_and_Embedded_Security";
 
-		//expected output digest to check hash property
-		string hp1_expected = "e19e79abcdf021f1";
-		string hp2_expected = "48f63b14b5c40a5a";
 
+		$display("\n---- BATTERY TEST ----");
 
 		//set the state of the machine to HEAD value
 		fork
@@ -87,11 +88,12 @@ module light_hash_tb_checks;
 
 		//convert bin final digest into a string to display its value
 		digest_str = $sformatf("%0h", digest);
-		$display("Digest string 0: %s", digest_str);
+		$display("\nInput message 0: %s", m0);
+		$display("Output digest 0: %s", digest_str);
 		if(digest_str == d0_expected)
-			$display("Test ok, the digest is equal to the pre-calculated.");
+			$display("Test ok, the digest is equal to precomputed one.");
 		else
-			$display("Test failed, the digest is different from pre-calculated: %s", d0_expected);
+			$display("Test failed, the digest is different from precomputed one: %s", d0_expected);
 
 
 		// SECOND STRING
@@ -118,11 +120,12 @@ module light_hash_tb_checks;
 		@(posedge clk) message_valid = 1'b0;
 		@(posedge clk);
 		digest_str = $sformatf("%0h", digest);
-		$display("Digest string 1: %s", digest_str);
+		$display("\nInput message 1: %s", m1);
+		$display("Output digest 1: %s", digest_str);
 		if(digest_str == d1_expected)
-			$display("Test ok, the digest is equal to the pre-calculated.");
+			$display("Test ok, the digest is equal to precomputed one.");
 		else
-			$display("Test failed, the digest is different from pre-calculated: %s", d1_expected);
+			$display("Test failed, the digest is different from precomputed one: %s", d1_expected);
 
 
 		// THIRD STRING
@@ -149,66 +152,128 @@ module light_hash_tb_checks;
 		@(posedge clk) message_valid = 1'b0;
 		@(posedge clk);
 		digest_str = $sformatf("%0h", digest);
-		$display("Digest string 2: %s", digest_str);
+		$display("\nInput message 2: %s", m2);
+		$display("Output digest 2: %s", digest_str);
 		if(digest_str == d2_expected)
-			$display("Test ok, the digest is equal to the pre-calculated.");
+			$display("Test ok, the digest is equal to precomputed one.");
 	    else
-			$display("Test failed, the digest is different from pre-calculated: %s", d2_expected);
+			$display("Test failed, the digest is different from precomputed one: %s", d2_expected);
 
 
-		// HASH PROPERTIES: Check that two identical strings, except for one character,
-		//									produce completely different digest values.
-		fork
-			@(posedge clk) message_valid = 1'b1;
-			@(posedge clk) state = HEAD;
-		join
-		@(posedge clk) message_valid = 1'b0;
 
-		foreach(hp1[j]) begin
+
+			// HASH PROPERTY 1: Check that two identical strings, except for one character,
+			//									produce completely different digest values.
+			$display("\n\n---- HASH PROPERTIES ----");
+
 			fork
 				@(posedge clk) message_valid = 1'b1;
-				@(posedge clk) state = MESSAGE;
-				@(posedge clk) message_byte = hp1[j];
+				@(posedge clk) state = HEAD;
 			join
 			@(posedge clk) message_valid = 1'b0;
-			wait(!lh.next_byte) @(posedge clk);
-		end
 
-		fork
-			@(posedge clk) message_valid = 1'b1;
-			@(posedge clk) state = TAIL;
-		join
-		@(posedge clk) message_valid = 1'b0;
-		@(posedge clk);
-		digest_str = $sformatf("%0h", digest);
-		fork
-			@(posedge clk) message_valid = 1'b1;
-			@(posedge clk) state = HEAD;
-		join
-		@(posedge clk) message_valid = 1'b0;
+			foreach(hp00[j]) begin
+				fork
+					@(posedge clk) message_valid = 1'b1;
+					@(posedge clk) state = MESSAGE;
+					@(posedge clk) message_byte = hp00[j];
+				join
+				@(posedge clk) message_valid = 1'b0;
+				wait(!lh.next_byte) @(posedge clk);
+			end
 
-		foreach(hp2[j]) begin
 			fork
 				@(posedge clk) message_valid = 1'b1;
-				@(posedge clk) state = MESSAGE;
-				@(posedge clk) message_byte = hp2[j];
+				@(posedge clk) state = TAIL;
 			join
 			@(posedge clk) message_valid = 1'b0;
-			wait(!lh.next_byte) @(posedge clk);
-		end
-		fork
-			@(posedge clk) message_valid = 1'b1;
-			@(posedge clk) state = TAIL;
-		join
-		@(posedge clk) message_valid = 1'b0;
-		@(posedge clk);
-		digest_str2 = $sformatf("%0h", digest);
-		$display("\n\nString hp1: %s, vs string hp2: %s", hp1, hp2);
-		$display("Digest hp1: %s, vs digest hp2: %s", digest_str, digest_str2);
-		if((digest_str == hp1_expected) && (digest_str2 == hp2_expected))
-			$display("Test ok, the digest is equal to the pre-calculated.\n\n");
-		else
-			$display("Test failed, the digest is different from pre-calculated: %s\n\n", d1_expected);
+			@(posedge clk);
+			digest_str = $sformatf("%0h", digest);
+			fork
+				@(posedge clk) message_valid = 1'b1;
+				@(posedge clk) state = HEAD;
+			join
+			@(posedge clk) message_valid = 1'b0;
+
+			foreach(hp01[j]) begin
+				fork
+					@(posedge clk) message_valid = 1'b1;
+					@(posedge clk) state = MESSAGE;
+					@(posedge clk) message_byte = hp01[j];
+				join
+				@(posedge clk) message_valid = 1'b0;
+				wait(!lh.next_byte) @(posedge clk);
+			end
+			fork
+				@(posedge clk) message_valid = 1'b1;
+				@(posedge clk) state = TAIL;
+			join
+			@(posedge clk) message_valid = 1'b0;
+			@(posedge clk);
+			digest_str2 = $sformatf("%0h", digest);
+			$display("\nInput Message 00: %s, Output Digest 00: %s", hp00, digest_str);
+			$display("Input Message 01: %s, Output Digest 01: %s", hp01, digest_str2);
+			if(digest_str != digest_str2)
+				$display("Test ok, digests are different.");
+			else
+				$display("Test failed, digest are identical");
+
+
+			// HASH PROPERTY 2: Check that two identical strings,
+			//									produce indentical digest values.
+
+			fork
+				@(posedge clk) message_valid = 1'b1;
+				@(posedge clk) state = HEAD;
+			join
+			@(posedge clk) message_valid = 1'b0;
+
+			foreach(hp10[j]) begin
+				fork
+					@(posedge clk) message_valid = 1'b1;
+					@(posedge clk) state = MESSAGE;
+					@(posedge clk) message_byte = hp10[j];
+				join
+				@(posedge clk) message_valid = 1'b0;
+				wait(!lh.next_byte) @(posedge clk);
+			end
+
+			fork
+				@(posedge clk) message_valid = 1'b1;
+				@(posedge clk) state = TAIL;
+			join
+			@(posedge clk) message_valid = 1'b0;
+			@(posedge clk);
+			digest_str = $sformatf("%0h", digest);
+			fork
+				@(posedge clk) message_valid = 1'b1;
+				@(posedge clk) state = HEAD;
+			join
+			@(posedge clk) message_valid = 1'b0;
+
+			foreach(hp11[j]) begin
+				fork
+					@(posedge clk) message_valid = 1'b1;
+					@(posedge clk) state = MESSAGE;
+					@(posedge clk) message_byte = hp11[j];
+				join
+				@(posedge clk) message_valid = 1'b0;
+				wait(!lh.next_byte) @(posedge clk);
+			end
+			fork
+				@(posedge clk) message_valid = 1'b1;
+				@(posedge clk) state = TAIL;
+			join
+			@(posedge clk) message_valid = 1'b0;
+			@(posedge clk);
+			digest_str2 = $sformatf("%0h", digest);
+			$display("\nInput Message 10: %s, Output Digest 10: %s", hp10, digest_str);
+			$display("Input Message 11: %s, Output Digest 11: %s", hp11, digest_str2);
+			if(digest_str == digest_str2)
+				$display("Test ok, digests are identical.\n\n");
+			else
+				$display("Test failed, digest are different\n\n");
+
 
 		@(posedge clk) $stop;
 	end

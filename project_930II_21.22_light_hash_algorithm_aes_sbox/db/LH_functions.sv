@@ -1,5 +1,4 @@
-typedef reg [7:0] unpacked_arr [0:7];
-parameter unpacked_arr para_1 = '{default:0};
+typedef reg [7:0] array [0:7];
 
 localparam  HEAD = 2'b00;
 localparam  TAIL = 2'b01;
@@ -15,27 +14,6 @@ function [63:0] get_digest(input [7:0] digest[0:7]);
 	get_digest[47:40] = digest[2];
 	get_digest[55:48] = digest[1];
 	get_digest[63:56] = digest[0];
-endfunction
-
-// print the digest
-function [63:0] print_digest(input [7:0] digest[0:7]);
-    string string_out;
-    string_out = $sformatf("%0h", digest[7]);
-    $display("Partial digest hex: %s", string_out);
-    string_out = $sformatf("%0h", digest[6]);
-    $display("Partial digest hex: %s", string_out);
-    string_out = $sformatf("%0h", digest[5]);
-    $display("Partial digest hex: %s", string_out);
-    string_out = $sformatf("%0h", digest[4]);
-    $display("Partial digest hex: %s", string_out);
-    string_out = $sformatf("%0h", digest[3]);
-    $display("Partial digest hex: %s", string_out);
-    string_out = $sformatf("%0h", digest[2]);
-    $display("Partial digest hex: %s", string_out);
-    string_out = $sformatf("%0h", digest[1]);
-    $display("Partial digest hex: %s", string_out);
-    string_out = $sformatf("%0h", digest[0]);
-    $display("Partial digest hex: %s", string_out);
 endfunction
 
 // hard left circular shift

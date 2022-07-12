@@ -36,7 +36,7 @@ module light_hash_tb_checks;
 	//simulation begin
 	initial begin
 
-		// ----------------- BATTERY TEST ----------------- //
+		// BATTERY TEST
 		//input messages to test
 		string m0 = "H4rdw4r3_Tr0j4n";
 		string m1 = "Nel mezzo del cammin di nostra vita mi ritrovai per una selva oscura, ché la diritta via era smarrita. Ahi quanto a dir qual era è cosa dura esta selva selvaggia e aspra e forte che nel pensier rinova la paura! Tant' è amara che poco è più morte; ma per trattar del ben ch'i' vi trovai, dirò de l'altre cose ch'i' v'ho scorte.";

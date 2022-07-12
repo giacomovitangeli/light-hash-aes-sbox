@@ -15,14 +15,10 @@ module light_hash (
 	);
 
 
-// ---------------------------------------------------------------------------
 // VARIABLES
-// ---------------------------------------------------------------------------
-
 
 // init digest
 localparam reg [7:0] restore_digest [0:7] = '{8'h34, 8'h55, 8'h0F, 8'h14, 8'hDA, 8'hC0, 8'h2B, 8'hEE};
-
 
 // 64 bit temporary digest
 reg [7:0] digest_tmp[0:7];
@@ -36,14 +32,10 @@ reg tmp_digest_ready;
 int row, column, index, r;
 
 
-
-// ---------------------------------------------------------------------------
 // LOGIC DESIGN
-// ---------------------------------------------------------------------------
 
-
-// function to compute the main computation
-function unpacked_arr update_digest(input [7:0] digest[0:7]);
+// function to compute new digest value
+function array update_digest(input [7:0] digest[0:7]);
   for (int j = 0; j < 8; j++) begin
 	  // take the byte from the digest register
 	  // and compute the XOR with the message_byte
@@ -126,9 +118,5 @@ always @(posedge clk or negedge rst_n) begin
 		end
 	end
 end
-
-
-
-
 
 endmodule
